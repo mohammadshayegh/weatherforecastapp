@@ -1,8 +1,14 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import config from "./config";
+import { useGetWeather } from "./services/api/weather";
 
 function App() {
+  const data = useGetWeather();
+
+  console.log(data);
+
   return (
     <div className="App">
       <header className="App-header">
