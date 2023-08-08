@@ -1,7 +1,8 @@
 import axios from "axios";
+import config from "../config";
 
 const apiClient = axios.create({
-  baseURL: "http://api.weatherapi.com/v1",
+  baseURL: config.API_URL,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",

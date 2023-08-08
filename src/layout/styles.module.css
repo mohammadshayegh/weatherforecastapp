@@ -1,0 +1,14 @@
+.layout {
+  width: 100%;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 655px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  padding-top: 25vh;
+}
