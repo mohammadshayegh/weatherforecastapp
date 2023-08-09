@@ -3,15 +3,15 @@ import { useState } from "react";
 import useDeepCompareEffect from "../hooks/useDeeoCompareEffect";
 import { apiClient } from "./http-common";
 
-const useQuery = (query: string, config?: AxiosRequestConfig<any>) => {
-  const [data, setData] = useState<any>(null);
+const useQuery = <T>(query: string, config?: AxiosRequestConfig<any>) => {
+  const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useDeepCompareEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await apiClient.get(query, config);
+        const res = await apiClient.get<T>(query, config);
         const data = await res.data;
         setData(data);
         setLoading(false);

@@ -1,5 +1,11 @@
 .layout {
   width: 100%;
+  background-image: url("../../../public/bg.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  box-sizing: border-box;
+  backdrop-filter: blur(5px);
 }
 
 .wrapper {

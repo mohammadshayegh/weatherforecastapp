@@ -1,62 +1,72 @@
+import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import WetherDetails from "./WeatherDeatils";
 
-type PropsType = {
-  city: string;
-  temperature: number;
-  icon: string;
-  condition: string;
-  realFeel: number;
-  time: string;
-  humidity: number;
-  temperatureF: number;
-  realFeelF: number;
+export type WeatherCardProps = {
+  title?: string;
+  temperature?: number;
+  icon?: string;
+  condition?: string;
+  realFeel?: number;
+  time?: string;
+  humidity?: number;
+  temperatureF?: number;
+  realFeelF?: number;
+  link?: string;
+  details?: { label: string; value?: string | number }[];
 };
 
 const WeatherCard = ({
-  city,
+  title,
   icon,
   temperature,
   condition,
   realFeel,
   time,
-  humidity,
-  temperatureF,
-  realFeelF,
-}: PropsType) => {
+  link,
+  details,
+}: WeatherCardProps) => {
+  const detailsMain = details?.slice(0, 3);
+  const detailsSecondary = details?.slice(3, details.length);
+
   return (
     <div className={styles["weather-card"]}>
-      <div className={styles["title"]}>{city} current weather </div>
+      <div className={styles["title"]}>{title} </div>
       <div className={styles["time"]}>{time}</div>
       <div className={styles["weather-info"]}>
-        <div className={styles["all-temperatures"]}>
-          <div>
-            <span className={styles["temperature"]}>{temperature}°</span>
-            <span className={styles["temperature-unit"]}>C</span>
+        <div className={styles["weather-info__left"]}>
+          <div className={styles["all-temperatures"]}>
+            <div>
+              <span className={styles["temperature"]}>{temperature}°</span>
+              <span className={styles["temperature-unit"]}>C</span>
+            </div>
+            {realFeel && (
+              <span className={styles["real-feel"]}>
+                Real Feel {realFeel}°c
+              </span>
+            )}
           </div>
-          <span className={styles["real-feel"]}>Real Feel {realFeel}°</span>
+          <div>
+            {icon && (
+              <img className={styles["icon"]} alt={condition} src={icon} />
+            )}
+            <div>{condition}</div>
+          </div>
         </div>
         <div>
-          <div className={styles["weather-details"]}>
-            <span>Humidity</span>
-            <span>{humidity}</span>
-          </div>
-          <div className={styles["weather-details"]}>
-            <span>Temperature (°F)</span>
-            <span>{temperatureF}</span>
-          </div>
-          <div className={styles["weather-details"]}>
-            <span>Feels like (°F)</span>
-            <span>{realFeelF}</span>
-          </div>
+          <WetherDetails details={detailsMain} />
         </div>
       </div>
-      <div className={styles["more-details"]}>
-        <div>{condition}</div>
-        <a href="#" className={styles["more-details-link"]}>
-          More details <AiOutlineArrowRight />
-        </a>
+      <div className={styles["weather-info-more-details"]}>
+        <WetherDetails details={detailsSecondary} />
       </div>
+
+      {link && (
+        <Link to={link} className={styles["more-details-link"]}>
+          More details <AiOutlineArrowRight />
+        </Link>
+      )}
     </div>
   );
 };

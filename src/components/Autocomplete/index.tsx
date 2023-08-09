@@ -14,6 +14,7 @@ export type AutocompletePropsType = {
   debounceTime?: number;
   items: OptionType[];
   onOptionSelect?: (value: OptionType) => void;
+  defaultValue?: string;
 };
 
 const Autocomplete = ({
@@ -21,10 +22,11 @@ const Autocomplete = ({
   debounceTime = 500,
   items,
   onOptionSelect,
+  defaultValue,
 }: AutocompletePropsType) => {
   const autocompleteWrapperRef = useRef(null);
   const key = useRef(0);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(defaultValue || "");
   const [open, setOpen] = useState(true);
 
   useOutsideOfElementClicked(autocompleteWrapperRef, () => setOpen(false));

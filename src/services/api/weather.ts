@@ -1,12 +1,13 @@
 import config from "../../config";
 import endpoints from "../endpoints";
 import useQuery from "../hooks";
+import { WeatherResponseType } from "../types/weather";
 
-export const useGetWeather = (city: string) => {
-  return useQuery(endpoints.weatherForecast, {
+export const useGetWeather = (lat: number, lan: number) => {
+  return useQuery<WeatherResponseType>(endpoints.weatherForecast, {
     params: {
       key: config.API_KEY,
-      q: city,
+      q: `${lat},${lan}`,
     },
   });
 };

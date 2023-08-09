@@ -4,7 +4,6 @@ import { debounce } from "lodash";
 import { CiSearch, CiLocationOn } from "react-icons/ci";
 
 type PropsType = {
-  inputValue?: string;
   defaultValue?: string;
   placeholder?: string;
   onChange?: (e: string) => void;
@@ -17,7 +16,6 @@ type PropsType = {
 };
 
 const TextInput = ({
-  inputValue,
   defaultValue,
   placeholder,
   onChange = () => {},
@@ -47,7 +45,7 @@ const TextInput = ({
       <input
         type="text"
         className={styles["text-input"]}
-        value={inputValue || value}
+        value={value}
         onChange={onChangeHandler}
         disabled={disabled}
         placeholder={placeholder}

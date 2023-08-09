@@ -1,12 +1,8 @@
 import "./App.css";
-import Layout from "./layout";
+import AppRoutes from "./routes";
 
 function App() {
-  return (
-    <div className="App">
-      <Layout />
-    </div>
-  );
+  return <AppRoutes />;
 }
 
 export default App;
