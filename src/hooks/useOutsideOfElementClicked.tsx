@@ -1,6 +1,6 @@
 import { RefObject, useEffect } from "react";
 
-function useOutsideAlerter(
+function useOutsideOfElementClicked(
   ref: RefObject<HTMLInputElement>,
   callback: () => void
 ) {
@@ -17,4 +17,4 @@ function useOutsideAlerter(
   }, [ref]);
 }
 
-export default useOutsideAlerter;
+export default useOutsideOfElementClicked;

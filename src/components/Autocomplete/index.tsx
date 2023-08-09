@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import TextInput from "../TextInput";
 import styles from "./styles.module.css";
 import AutocompleteOptions from "./AutocompleteOptions";
-import useOutsideAlerter from "../../hooks/useOutsideAlerter";
+import useOutsideOfElementClicked from "../../hooks/useOutsideOfElementClicked";
 
 export type OptionType = {
   id: number | null;
@@ -23,10 +23,11 @@ const Autocomplete = ({
   onOptionSelect,
 }: AutocompletePropsType) => {
   const autocompleteWrapperRef = useRef(null);
+  const key = useRef(0);
   const [value, setValue] = useState("");
   const [open, setOpen] = useState(true);
 
-  useOutsideAlerter(autocompleteWrapperRef, () => setOpen(false));
+  useOutsideOfElementClicked(autocompleteWrapperRef, () => setOpen(false));
 
   const onChangeHandler = (value: string) => {
     setValue(value);
@@ -34,8 +35,10 @@ const Autocomplete = ({
   };
 
   const onOptionSelectHandler = (value: OptionType) => {
+    key.current++;
     onOptionSelect?.(value);
     onChangeHandler(value?.label || "");
+
     setOpen(false);
   };
 
@@ -44,9 +47,10 @@ const Autocomplete = ({
       <TextInput
         onChange={onChangeHandler}
         debounceTime={debounceTime}
-        // inputValue={value}
         onFocus={() => setOpen(true)}
         className={styles["input"]}
+        defaultValue={value}
+        key={key.current}
       />
       <AutocompleteOptions
         items={items}
