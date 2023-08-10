@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useGetCities } from "../../services/api/city";
-import Autocomplete from "../Autocomplete";
+import Autocomplete from "../core/Autocomplete";
 
 type SearchCityInputProps = {
   onCitySelect: (cord: { lat: number; lon: number }) => void;

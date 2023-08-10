@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import TextInput from "../TextInput";
 import styles from "./styles.module.css";
 import AutocompleteOptions from "./AutocompleteOptions";
-import useOutsideOfElementClicked from "../../hooks/useOutsideOfElementClicked";
+import useOutsideOfElementClicked from "../../../hooks/useOutsideOfElementClicked";
 
 export type OptionType = {
   id: number | null;
