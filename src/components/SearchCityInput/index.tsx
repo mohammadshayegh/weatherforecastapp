@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useGetCities } from "../../services/api/city";
 import Autocomplete from "../Autocomplete";
 
@@ -14,13 +14,14 @@ const SearchCityInput = ({
   loading,
 }: SearchCityInputProps) => {
   const [inputValue, setInputValue] = useState("");
-  const cities = useGetCities(inputValue);
+  const { data: cities } = useGetCities(inputValue, { enabled: !!inputValue });
 
-  const items =
-    cities.data?.map((city) => ({
+  const items = useMemo(() => {
+    return cities?.map((city) => ({
       ...city,
       label: `${city.name} (${city.country})`,
-    })) || [];
+    }));
+  }, [cities]);
 
   const onOptionSelectHandler = (value: any) => {
     if (!value) return;
@@ -32,7 +33,7 @@ const SearchCityInput = ({
   return (
     <Autocomplete
       defaultValue={defaultValue}
-      items={items}
+      items={items || []}
       onChange={setInputValue}
       onOptionSelect={onOptionSelectHandler}
     />

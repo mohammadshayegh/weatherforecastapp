@@ -11,7 +11,7 @@ const City = () => {
     lat: urlParams.get("lat") || 0,
     lon: urlParams.get("lon") || 0,
   });
-  const { data, loading } = useGetCityForecast(
+  const { data, isLoading } = useGetCityForecast(
     +coordination.lat,
     +coordination.lon
   );
@@ -24,9 +24,9 @@ const City = () => {
       <NavBar
         setCoordination={setCoordination}
         defaultValue={`${name} (${country})`}
-        loading={loading}
+        loading={isLoading}
       />
-      <div>
+      <div style={{ maxWidth: 1000, margin: "auto", paddingBottom: 16 }}>
         <WeatherCard
           temperature={city?.temp_c}
           title={`${name} (${country}) current weather`}
