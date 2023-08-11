@@ -1,37 +1,54 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import { CiSearch } from "react-icons/ci";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetCities } from "../../services/api/city";
+import { setSelectedCity } from "../../store/slices/searchCity";
 import { extractErrorMessage } from "../../utils/errors";
 import { useNotification } from "../Notification/hooks";
 import Autocomplete from "../core/Autocomplete";
-import { CiLocationOn, CiSearch } from "react-icons/ci";
-import { getUserGeoLocation } from "../../utils/navigator";
+import { AxiosError } from "axios";
 
-type SearchCityInputProps = {
-  onCitySelect: (cord: { lat: number; lon: number }) => void;
-  defaultValue?: string;
-  loading?: boolean;
-};
-
-const SearchCityInput = ({
-  onCitySelect,
-  defaultValue,
-  loading,
-}: SearchCityInputProps) => {
+const SearchCityInput = () => {
   const [inputValue, setInputValue] = useState("");
   const { addNotification } = useNotification();
+  const { searchedCity } = useSelector((state: any) => state.searchCity);
+  const enabledGetCities = useRef(false);
+  const dispatch = useDispatch();
+
+  const onError = (error: AxiosError) => {
+    const message = extractErrorMessage(error);
+    addNotification({ message, type: "danger" });
+  };
+
+  const onSuccess = (data: any) => {
+    if (data.length === 0) {
+      addNotification({ message: "No cities found", type: "warning" });
+    }
+  };
+
   const { data: cities } = useGetCities(inputValue.trim(), {
-    enabled: !!inputValue,
-    onError: (error) => {
-      const message = extractErrorMessage(error);
-      addNotification({ message, type: "danger" });
-    },
-    onSuccess: (data) => {
-      // @ts-ignore
-      if (data.length === 0) {
-        addNotification({ message: "No cities found", type: "warning" });
-      }
-    },
+    enabled: enabledGetCities.current,
+    onError,
+    onSuccess,
   });
+
+  const onCitySelect = (value: any) => {
+    if (!value) return;
+
+    enabledGetCities.current = false;
+
+    const selectedCity = cities?.find(
+      (city) => city.lat === value.lat && city.lon === value.lon
+    );
+
+    document.title = `${selectedCity?.name} (${selectedCity?.country})`;
+
+    dispatch(setSelectedCity(selectedCity));
+  };
+
+  const cityName = searchedCity?.name
+    ? `${searchedCity?.name} (${searchedCity?.country})`
+    : undefined;
 
   const items = useMemo(() => {
     return cities?.map((city) => ({
@@ -40,33 +57,17 @@ const SearchCityInput = ({
     }));
   }, [cities]);
 
-  const onOptionSelectHandler = (value: any) => {
-    if (!value) return;
-    onCitySelect({ lat: value.lat, lon: value.lon });
-  };
-
-  const setCityBasedOnGeoLocation = () => {
-    getUserGeoLocation()
-      .then((cord: any) => {
-        onCitySelect(cord);
-      })
-      .catch((error) => {
-        addNotification({ message: error, type: "danger" });
-      });
-  };
-
-  if (loading) return <></>;
-
   return (
     <Autocomplete
-      defaultValue={defaultValue}
+      defaultValue={cityName}
       items={items || []}
       onChange={setInputValue}
-      onOptionSelect={onOptionSelectHandler}
+      onOptionSelect={onCitySelect}
       adornment={<CiSearch fontSize="2rem" />}
-      endAdornment={
-        <CiLocationOn fontSize="2rem" onClick={setCityBasedOnGeoLocation} />
-      }
+      placeholder="Search city"
+      onKeyDown={() => {
+        enabledGetCities.current = true;
+      }}
     />
   );
 };

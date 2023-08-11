@@ -1,5 +1,5 @@
 export const getUserGeoLocation = () => {
-  return new Promise((resolve, reject) => {
+  return new Promise<{ lat: number; lon: number }>((resolve, reject) => {
     if (!navigator.geolocation) {
       reject("Geolocation is not supported by your browser");
     }

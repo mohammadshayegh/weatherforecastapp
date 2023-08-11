@@ -11,6 +11,7 @@ export const useGetWeather = (
   queryConfig?: QueryConfigType
 ) => {
   return useQuery<WeatherResponseType>(
+    [endpoints.weatherForecast, `${params.lat},${params.lon}`],
     endpoints.weatherForecast,
     {
       params: {

@@ -15,8 +15,6 @@ const ForecastCards = ({
   cityName,
   isLoading,
 }: ForecastCardsProps) => {
-  console.log(forecastInfo);
-
   return (
     <>
       <h2 style={{ textAlign: "center" }}>Forecast (5 Days)</h2>

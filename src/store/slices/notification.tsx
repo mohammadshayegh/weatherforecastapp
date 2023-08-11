@@ -9,7 +9,6 @@ export const notificationSlice = createSlice({
   reducers: {
     addNotification: (state, action) => {
       const { payload } = action;
-      console.log("payload", payload);
 
       //@ts-ignore
       state.notifications.push({

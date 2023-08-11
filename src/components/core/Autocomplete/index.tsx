@@ -16,8 +16,10 @@ export type AutocompletePropsType = {
   items: OptionType[];
   onOptionSelect?: (value: OptionType) => void;
   defaultValue?: string;
+  placeholder?: string;
   adornment?: React.ReactNode;
   endAdornment?: React.ReactNode;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
 const Autocomplete = ({
@@ -26,8 +28,10 @@ const Autocomplete = ({
   items,
   onOptionSelect,
   defaultValue,
+  placeholder,
   adornment,
   endAdornment,
+  onKeyDown,
 }: AutocompletePropsType) => {
   const autocompleteWrapperRef = useRef(null);
   const key = useRef(0);
@@ -60,6 +64,8 @@ const Autocomplete = ({
         key={key.current}
         adornment={adornment}
         endAdornment={endAdornment}
+        onKeyDown={onKeyDown}
+        placeholder={placeholder}
       />
       <AutocompleteOptions
         items={items}

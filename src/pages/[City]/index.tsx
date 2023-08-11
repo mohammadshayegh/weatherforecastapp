@@ -1,41 +1,40 @@
-import { useState } from "react";
+import { AxiosError } from "axios";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import WeatherCard from "../../components/WeatherCard";
 import { useGetCityForecast } from "../../services/api/forecast";
+import { addNotification } from "../../store/slices/notification";
+import { extractErrorMessage } from "../../utils/errors";
 import ForecastCards from "./ForecastCards";
 import NavBar from "./Navbar";
-import { extractErrorMessage } from "../../utils/errors";
-import { addNotification } from "../../store/slices/notification";
 
 const City = () => {
-  const urlParams = new URLSearchParams(window.location.search);
+  const { searchedCity } = useSelector((state: any) => state.searchCity);
 
-  const [coordination, setCoordination] = useState({
-    lat: urlParams.get("lat") || 0,
-    lon: urlParams.get("lon") || 0,
-  });
+  const { city: cityUrl } = useParams();
+
+  const onError = (error: AxiosError) => {
+    const message = extractErrorMessage(error);
+    addNotification({ message, type: "danger" });
+  };
+
   const { data, isLoading } = useGetCityForecast(
-    {
-      lat: +coordination.lat,
-      lon: +coordination.lon,
-    },
-    {
-      onError: (error) => {
-        const message = extractErrorMessage(error);
-        addNotification({ message, type: "danger" });
-      },
-    }
+    { query: searchedCity.url || cityUrl },
+    { onError }
   );
 
   const city = data?.current;
   const { name, country } = data?.location || {};
 
+  useEffect(() => {
+    const { pathname } = window.location;
+    window.history.replaceState(null, "", searchedCity.url || pathname);
+  }, [searchedCity]);
+
   return (
     <>
-      <NavBar
-        setCoordination={setCoordination}
-        defaultValue={`${name} (${country})`}
-        loading={isLoading}
-      />
+      <NavBar />
       <div style={{ maxWidth: 1000, margin: "auto", padding: 16 }}>
         <WeatherCard
           temperature={city?.temp_c}

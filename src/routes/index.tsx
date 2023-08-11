@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Error404Page from "../pages/404";
-import City from "../pages/City";
+import City from "../pages/[City]";
 import Home from "../pages/Home";
 
 const router = createBrowserRouter([
@@ -9,11 +9,11 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: "/city",
+    path: "/:city",
     element: <City />,
   },
   {
-    path: "*",
+    path: "/404",
     element: <Error404Page />,
   },
 ]);

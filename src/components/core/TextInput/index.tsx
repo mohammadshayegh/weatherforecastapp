@@ -14,6 +14,7 @@ type PropsType = {
   onBlur?: (e: any) => void;
   adornment?: React.ReactNode;
   endAdornment?: React.ReactNode;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
 const TextInput = ({
@@ -27,6 +28,7 @@ const TextInput = ({
   onBlur,
   adornment,
   endAdornment,
+  onKeyDown,
 }: PropsType) => {
   const [value, setValue] = useState(defaultValue);
 
@@ -52,6 +54,7 @@ const TextInput = ({
         placeholder={placeholder}
         onFocus={onFocus}
         onBlur={onBlur}
+        onKeyDown={onKeyDown}
       />
       <div className={styles["adornment"]}>{endAdornment}</div>
     </div>

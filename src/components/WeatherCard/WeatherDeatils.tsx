@@ -33,8 +33,8 @@ const WetherDetails = ({ details, isLoading }: PropTypes) => {
       {details?.map((detail, index) => {
         return (
           <div className={styles["weather-details"]} key={index}>
-            <span>{detail.label}</span>
-            <span>{detail.value}</span>
+            <span>{detail.label || "--"}</span>
+            <span>{detail.value || "--"}</span>
           </div>
         );
       })}

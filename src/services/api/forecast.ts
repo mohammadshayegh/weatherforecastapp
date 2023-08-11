@@ -4,18 +4,19 @@ import useQuery from "../hooks";
 import { ForecastResponseType } from "../types/forecast";
 import { QueryConfigType } from "../types/queyClientTypes";
 
-type UseGetCityForecastInputType = { lat: number; lon: number; days?: number };
+type UseGetCityForecastInputType = { query: string; days?: number };
 
 export const useGetCityForecast = (
   params: UseGetCityForecastInputType,
   queryConfig?: QueryConfigType
 ) => {
   return useQuery<ForecastResponseType>(
+    [endpoints.forecast, params.query],
     endpoints.forecast,
     {
       params: {
         key: config.API_KEY,
-        q: `${params.lat},${params.lon}`,
+        q: params.query,
         days: params.days || 5,
       },
     },

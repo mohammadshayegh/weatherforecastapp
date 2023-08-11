@@ -6,6 +6,7 @@ import { QueryConfigType } from "../types/queyClientTypes";
 
 export const useGetCities = (city: string, queryConfig?: QueryConfigType) => {
   return useQuery<CityResponseType>(
+    [endpoints.search, city],
     endpoints.search,
     {
       params: {
