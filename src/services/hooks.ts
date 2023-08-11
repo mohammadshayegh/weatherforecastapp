@@ -9,22 +9,27 @@ const useQuery = <T>(
   config?: AxiosRequestConfig<any>,
   queryConfig?: QueryConfigType
 ) => {
-  const isLoading = useRef(false);
+  const isFetching = useRef(false);
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState(null);
 
   const fetchData = useCallback(async () => {
-    if (isLoading.current) return;
+    if (isFetching.current) return;
 
-    isLoading.current = true;
+    isFetching.current = true;
+    setLoading(true);
     try {
       const res = await apiClient.get<T>(query, config);
       const data = await res.data;
       setData(data);
-    } catch (error) {
-      setError(error as any);
+      queryConfig?.onSuccess?.<T>(data);
+    } catch (error: any) {
+      setError(error);
+      queryConfig?.onError?.(error);
     } finally {
-      isLoading.current = false;
+      isFetching.current = false;
+      setLoading(false);
     }
   }, [query, config]);
 
@@ -34,7 +39,7 @@ const useQuery = <T>(
     fetchData();
   }, [query, config]);
 
-  return { data, isLoading: isLoading.current, error, fetchData };
+  return { data, isLoading: loading, error, fetchData };
 };
 
 export default useQuery;

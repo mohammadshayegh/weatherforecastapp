@@ -16,5 +16,11 @@
   justify-content: center;
   align-items: center;
   margin: auto;
-  padding-top: 25vh;
+  padding: 10vh 16px 16px;
+}
+
+@media screen and (min-height: 768px) {
+  .wrapper {
+    padding-top: 25vh;
+  }
 }

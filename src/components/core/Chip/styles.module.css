@@ -1,0 +1,59 @@
+.chip {
+  padding: 5px 15px;
+  color: #fff;
+  width: 100%;
+  border-radius: 5px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  backdrop-filter: blur(4px);
+  position: relative;
+}
+
+.icon {
+  display: flex;
+  font-size: 25px;
+}
+
+.chip--success {
+  background-color: #4caf4fc2;
+}
+
+.chip--danger {
+  background-color: #f44336c2;
+}
+
+.chip--info {
+  background-color: #2196f3c2;
+}
+
+.chip--warning {
+  background-color: #ffe600c2;
+  color: rgb(2, 5, 7);
+}
+
+.end-adornment {
+  margin-left: auto;
+  display: flex;
+}
+
+.timer {
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  bottom: 0;
+  background-color: #000;
+  left: 0;
+  animation-name: animation;
+  animation-fill-mode: forwards;
+}
+
+@keyframes animation {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}

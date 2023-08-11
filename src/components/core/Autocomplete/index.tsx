@@ -3,6 +3,7 @@ import TextInput from "../TextInput";
 import styles from "./styles.module.css";
 import AutocompleteOptions from "./AutocompleteOptions";
 import useOutsideOfElementClicked from "../../../hooks/useOutsideOfElementClicked";
+import { CiLocationOn, CiSearch } from "react-icons/ci";
 
 export type OptionType = {
   id: number | null;
@@ -15,6 +16,8 @@ export type AutocompletePropsType = {
   items: OptionType[];
   onOptionSelect?: (value: OptionType) => void;
   defaultValue?: string;
+  adornment?: React.ReactNode;
+  endAdornment?: React.ReactNode;
 };
 
 const Autocomplete = ({
@@ -23,6 +26,8 @@ const Autocomplete = ({
   items,
   onOptionSelect,
   defaultValue,
+  adornment,
+  endAdornment,
 }: AutocompletePropsType) => {
   const autocompleteWrapperRef = useRef(null);
   const key = useRef(0);
@@ -53,6 +58,8 @@ const Autocomplete = ({
         className={styles["input"]}
         defaultValue={value}
         key={key.current}
+        adornment={adornment}
+        endAdornment={endAdornment}
       />
       <AutocompleteOptions
         items={items}

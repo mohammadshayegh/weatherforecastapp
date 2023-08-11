@@ -1,7 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
-import styles from "./style.module.css";
 import { debounce } from "lodash";
-import { CiSearch, CiLocationOn } from "react-icons/ci";
+import { useCallback, useState } from "react";
+import styles from "./style.module.css";
 
 type PropsType = {
   defaultValue?: string;
@@ -13,6 +12,8 @@ type PropsType = {
   debounceTime?: number;
   onFocus?: (e: any) => void;
   onBlur?: (e: any) => void;
+  adornment?: React.ReactNode;
+  endAdornment?: React.ReactNode;
 };
 
 const TextInput = ({
@@ -24,6 +25,8 @@ const TextInput = ({
   debounceTime = 1500,
   onFocus,
   onBlur,
+  adornment,
+  endAdornment,
 }: PropsType) => {
   const [value, setValue] = useState(defaultValue);
 
@@ -39,9 +42,7 @@ const TextInput = ({
 
   return (
     <div className={[styles["wrapper"], className].join(" ")}>
-      <div className={styles["icon"]}>
-        <CiSearch fontSize="2rem" />
-      </div>
+      <div className={styles["icon"]}>{adornment}</div>
       <input
         type="text"
         className={styles["text-input"]}
@@ -52,9 +53,7 @@ const TextInput = ({
         onFocus={onFocus}
         onBlur={onBlur}
       />
-      <div className={styles["adornment"]}>
-        <CiLocationOn fontSize="2rem" />
-      </div>
+      <div className={styles["adornment"]}>{endAdornment}</div>
     </div>
   );
 };
