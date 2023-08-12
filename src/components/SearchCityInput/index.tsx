@@ -1,23 +1,35 @@
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 import { CiSearch } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetCities } from "../../services/api/city";
+import { CityResponseType, CityType } from "../../services/types/city";
 import { ErrorType } from "../../services/types/common";
-import { setSelectedCity } from "../../store/slices/searchedCity";
+import { AppDispatch, StoreType } from "../../store";
+import {
+  setSelectedCity,
+  setUserSearchedCity,
+} from "../../store/slices/searchedCity";
 import { extractErrorMessage } from "../../utils/errors";
 import { useNotification } from "../Notification/hooks";
 import Autocomplete from "../core/Autocomplete";
-import { CityResponseType, CityType } from "../../services/types/city";
-import { AppDispatch, StoreType } from "../../store";
 
 const SearchCityInput = () => {
-  const [inputValue, setInputValue] = useState("");
+  const inputValue =
+    useSelector((state: StoreType) => state.searchedCity.userSearchedCity) ||
+    "";
+
   const { addNotification } = useNotification();
   const { searchedCity } = useSelector(
     (state: StoreType) => state.searchedCity
   );
   const enabledGetCities = useRef(false);
   const dispatch: AppDispatch = useDispatch();
+
+  const setInputValue = (value: string) => {
+    dispatch(setUserSearchedCity(value));
+  };
+
+  console.log("inputValue", inputValue);
 
   const onError = (error: ErrorType) => {
     const message = extractErrorMessage(error);
@@ -30,7 +42,7 @@ const SearchCityInput = () => {
     }
   };
 
-  const { data: cities } = useGetCities(inputValue.trim(), {
+  const { data: cities } = useGetCities(inputValue?.trim() || "", {
     enabled: enabledGetCities.current,
     onError,
     onSuccess,
@@ -63,7 +75,7 @@ const SearchCityInput = () => {
 
   return (
     <Autocomplete
-      defaultValue={cityName}
+      defaultValue={cityName || inputValue}
       items={items || []}
       onChange={setInputValue}
       onOptionSelect={onCitySelect}

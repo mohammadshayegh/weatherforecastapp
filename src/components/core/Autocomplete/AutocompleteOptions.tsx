@@ -16,7 +16,7 @@ function AutocompleteOptions<T extends OptionType>({
   if (!items.length || !open) return null;
 
   return (
-    <div style={{ position: "relative" }}>
+    <div className={styles["options-container"]}>
       <div className={styles["options-wrapper"]}>
         {items.map((item: T) => (
           <div

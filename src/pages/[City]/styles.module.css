@@ -1,0 +1,22 @@
+.cards-wrapper {
+  max-width: 1000px;
+  margin: auto;
+  padding: 16px;
+}
+
+.navbar-container {
+  background: #1e213a;
+}
+
+.navbar {
+  padding: 5px 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.title {
+  text-align: center;
+}

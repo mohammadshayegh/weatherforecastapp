@@ -33,6 +33,11 @@
   color: rgb(2, 5, 7);
 }
 
+.label {
+  display: "flex";
+  align-items: "center";
+}
+
 .end-adornment {
   margin-left: auto;
   display: flex;

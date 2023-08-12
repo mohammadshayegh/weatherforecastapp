@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useNotification } from "../../components/Notification/hooks";
 import WeatherCard from "../../components/WeatherCard";
@@ -9,9 +9,15 @@ import { StoreType } from "../../store";
 import { extractErrorMessage } from "../../utils/errors";
 import ForecastCards from "./ForecastCards";
 import NavBar from "./Navbar";
+import styles from "./styles.module.css";
+import {
+  setSelectedCity,
+  setUserSearchedCity,
+} from "../../store/slices/searchedCity";
 
 const City = () => {
   const { addNotification } = useNotification();
+  const dispatch = useDispatch();
   const { searchedCity } = useSelector(
     (state: StoreType) => state.searchedCity
   );
@@ -25,7 +31,15 @@ const City = () => {
 
   const { data, isLoading } = useGetCityForecast(
     { query: searchedCity?.url || cityUrl || "" },
-    { onError }
+    {
+      onError,
+      onSuccess: (data) => {
+        const { name, country } = data?.location || {};
+
+        dispatch(setSelectedCity({ ...data.location, url: cityUrl || "" }));
+        dispatch(setUserSearchedCity(`${name} (${country})`));
+      },
+    }
   );
 
   const city = data?.current;
@@ -39,7 +53,7 @@ const City = () => {
   return (
     <>
       <NavBar />
-      <div style={{ maxWidth: 1000, margin: "auto", padding: 16 }}>
+      <div className={styles["cards-wrapper"]}>
         <WeatherCard
           temperature={city?.temp_c}
           title={`${name} (${country}) current weather`}
@@ -64,6 +78,7 @@ const City = () => {
           forecastInfo={data?.forecast?.forecastday}
           country={country}
           cityName={name}
+          isLoading={isLoading}
         />
       </div>
     </>

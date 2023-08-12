@@ -20,6 +20,8 @@ const Home = () => {
     addNotification({ message, type: "danger" });
   };
 
+  console.log(searchedCity);
+
   const { data, isLoading } = useGetWeather(
     searchedCity || { lat: 0, lon: 0 },
     {

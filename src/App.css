@@ -29,6 +29,16 @@ p {
   display: flex;
 }
 
+.vertical-center {
+  display: flex;
+  align-items: center;
+}
+
+.horizontal-center {
+  display: flex;
+  justify-content: center;
+}
+
 .bold {
   font-weight: bold;
 }

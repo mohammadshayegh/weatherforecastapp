@@ -13,7 +13,7 @@ const Chip = ({ label, type, endAdornment, timer }: ChipPropsType) => {
   return (
     <div className={clsx(styles["chip"], styles[`chip--${type}`])}>
       <ChipIcon type={type} />
-      <span style={{ display: "flex", alignItems: "center" }}>{label}</span>
+      <span className={styles["label"]}>{label}</span>
       <div className={styles["end-adornment"]}>{endAdornment}</div>
       {timer ? (
         <div

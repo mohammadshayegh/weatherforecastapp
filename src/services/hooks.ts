@@ -8,6 +8,7 @@ import { apiClient } from "./http-common";
 import { ErrorType } from "./types/common";
 import { QueryConfigType } from "./types/queyClientTypes";
 import { AppDispatch, StoreType } from "../store";
+import { STALE_TIME_MS } from "./constants";
 
 function useQuery<T>(
   queryKeys: string[],
@@ -29,7 +30,7 @@ function useQuery<T>(
 
     // cache the response
     const staleTime = isNil(queryConfig.staleTime)
-      ? Date.now() + 60 * 1000
+      ? Date.now() + STALE_TIME_MS
       : Date.now() + queryConfig.staleTime;
     dispatch(addQuery({ key, data, staleTime }));
   };

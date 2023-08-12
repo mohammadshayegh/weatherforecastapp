@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CityType, GeoLocationType } from "../../services/types/city";
 
 type InitialStateType = {
+  userSearchedCity: string | null | undefined;
   searchedCity: CityType | null | undefined;
   userLocation: GeoLocationType | null | undefined;
 };
@@ -11,6 +12,7 @@ export const searchedCitySlice = createSlice({
   initialState: {
     searchedCity: null,
     userLocation: null,
+    userSearchedCity: null,
   } as InitialStateType,
   reducers: {
     setSelectedCity: (
@@ -25,8 +27,15 @@ export const searchedCitySlice = createSlice({
     ) => {
       state.userLocation = action.payload;
     },
+    setUserSearchedCity: (
+      state,
+      action: PayloadAction<InitialStateType["userSearchedCity"]>
+    ) => {
+      state.userSearchedCity = action.payload;
+    },
   },
 });
 
-export const { setSelectedCity, setUserLocation } = searchedCitySlice.actions;
+export const { setSelectedCity, setUserLocation, setUserSearchedCity } =
+  searchedCitySlice.actions;
 export default searchedCitySlice.reducer;
