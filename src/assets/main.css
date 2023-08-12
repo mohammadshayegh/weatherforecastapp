@@ -4,6 +4,13 @@
   --main-border-color: #ccc;
   --main-border-radius: 10px;
   --base-size: 5px;
+
+  --pallet-primary-color: #ebebeb;
+  --pallet-secondary-color: rgb(2, 5, 7);
+  --pallet-danger-color: #f44336c2;
+  --pallet-success-color: #4caf4fc2;
+  --pallet-warning-color: #ffe600c2;
+  --pallet-info-color: #2196f3c2;
 }
 
 * {
@@ -23,28 +30,6 @@ html {
 
 p {
   margin: 0;
-}
-
-.flex {
-  display: flex;
-}
-
-.vertical-center {
-  display: flex;
-  align-items: center;
-}
-
-.horizontal-center {
-  display: flex;
-  justify-content: center;
-}
-
-.bold {
-  font-weight: bold;
-}
-
-.uppercase {
-  text-transform: uppercase;
 }
 
 a {

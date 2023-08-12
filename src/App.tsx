@@ -1,4 +1,4 @@
-import "./App.css";
+import "./assets/main.css";
 import Notification from "./components/Notification";
 import AppRoutes from "./routes";
 import store from "./store";

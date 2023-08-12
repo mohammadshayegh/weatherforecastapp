@@ -17,20 +17,20 @@
 }
 
 .chip--success {
-  background-color: #4caf4fc2;
+  background-color: var(--pallet-success-color);
 }
 
 .chip--danger {
-  background-color: #f44336c2;
+  background-color: var(--pallet-danger-color);
 }
 
 .chip--info {
-  background-color: #2196f3c2;
+  background-color: var(--pallet-info-color);
 }
 
 .chip--warning {
-  background-color: #ffe600c2;
-  color: rgb(2, 5, 7);
+  background-color: var(--pallet-warning-color);
+  color: var(--pallet-secondary-color);
 }
 
 .label {
@@ -48,7 +48,7 @@
   width: 100%;
   height: 3px;
   bottom: 0;
-  background-color: #000;
+  background-color: var(--pallet-secondary-color);
   left: 0;
   animation-name: animation;
   animation-fill-mode: forwards;

@@ -7,7 +7,7 @@
 }
 
 .options-wrapper {
-  background-color: #fff;
+  background-color: var(--pallet-primary-color);
   position: absolute;
   z-index: 10;
   width: 100%;
