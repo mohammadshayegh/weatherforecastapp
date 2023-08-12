@@ -8,7 +8,7 @@ type UseGetCityForecastInputType = { query: string; days?: number };
 
 export const useGetCityForecast = (
   params: UseGetCityForecastInputType,
-  queryConfig?: QueryConfigType
+  queryConfig?: QueryConfigType<ForecastResponseType>
 ) => {
   return useQuery<ForecastResponseType>(
     [endpoints.forecast, params.query],

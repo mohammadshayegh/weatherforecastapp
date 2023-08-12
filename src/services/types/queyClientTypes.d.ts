@@ -1,8 +1,8 @@
-import { AxiosError } from "axios";
+import { ErrorType } from "./common";
 
-export type QueryConfigType = {
+export type QueryConfigType<T> = {
   enabled?: boolean;
-  onError?: (error: AxiosError) => void;
-  onSuccess?: <T>(data: T) => void;
+  onError?: (error: ErrorType) => void;
+  onSuccess?: (data: T) => void;
   staleTime?: number;
 };

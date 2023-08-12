@@ -1,14 +1,23 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
+  NotificationType,
   addNotification,
   deleteNotification,
 } from "../../store/slices/notification";
+import { AppDispatch, StoreType } from "../../store";
+
+export type AddNotificationInputType = Pick<
+  NotificationType,
+  "message" | "type"
+>;
 
 export const useNotification = () => {
-  const { notifications } = useSelector((state: any) => state.notification);
-  const dispatch = useDispatch();
+  const { notifications } = useSelector(
+    (state: StoreType) => state.notification
+  );
+  const dispatch: AppDispatch = useDispatch();
 
-  const addAndDeleteNotification = (notification: any) => {
+  const addAndDeleteNotification = (notification: AddNotificationInputType) => {
     const id = Math.floor(Math.random() * 1000000);
     dispatch(addNotification({ ...notification, id }));
 
@@ -20,7 +29,7 @@ export const useNotification = () => {
   return {
     notifications,
     addNotification: addAndDeleteNotification,
-    deleteNotification: (id: { id?: number; index?: number }) =>
+    deleteNotification: (id: { id?: NotificationType["id"]; index?: number }) =>
       dispatch(deleteNotification(id)),
   };
 };

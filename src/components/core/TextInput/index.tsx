@@ -1,5 +1,13 @@
 import { debounce } from "lodash";
-import { useCallback, useState } from "react";
+import {
+  CSSProperties,
+  ChangeEvent,
+  FocusEvent,
+  KeyboardEvent,
+  ReactNode,
+  useCallback,
+  useState,
+} from "react";
 import styles from "./style.module.css";
 
 type PropsType = {
@@ -7,14 +15,13 @@ type PropsType = {
   placeholder?: string;
   onChange?: (e: string) => void;
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   disabled?: boolean;
   debounceTime?: number;
-  onFocus?: (e: any) => void;
-  onBlur?: (e: any) => void;
-  adornment?: React.ReactNode;
-  endAdornment?: React.ReactNode;
-  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  onFocus?: (e: FocusEvent<HTMLInputElement, Element>) => void;
+  adornment?: ReactNode;
+  endAdornment?: ReactNode;
+  onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
 };
 
 const TextInput = ({
@@ -25,14 +32,13 @@ const TextInput = ({
   disabled,
   debounceTime = 1500,
   onFocus,
-  onBlur,
   adornment,
   endAdornment,
   onKeyDown,
 }: PropsType) => {
   const [value, setValue] = useState(defaultValue);
 
-  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setValue(value);
     debouncedOnChange(value);
@@ -53,7 +59,6 @@ const TextInput = ({
         disabled={disabled}
         placeholder={placeholder}
         onFocus={onFocus}
-        onBlur={onBlur}
         onKeyDown={onKeyDown}
       />
       <div className={styles["adornment"]}>{endAdornment}</div>

@@ -5,8 +5,8 @@ function useOutsideOfElementClicked(
   callback: () => void
 ) {
   useEffect(() => {
-    function handleClickOutside(event: any) {
-      if (ref.current && !ref.current.contains(event.target)) {
+    function handleClickOutside({ target }: MouseEvent) {
+      if (ref.current && !ref.current.contains(target as Node | null)) {
         callback();
       }
     }

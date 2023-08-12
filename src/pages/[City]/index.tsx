@@ -1,26 +1,30 @@
-import { AxiosError } from "axios";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { useNotification } from "../../components/Notification/hooks";
 import WeatherCard from "../../components/WeatherCard";
 import { useGetCityForecast } from "../../services/api/forecast";
-import { addNotification } from "../../store/slices/notification";
+import { ErrorType } from "../../services/types/common";
+import { StoreType } from "../../store";
 import { extractErrorMessage } from "../../utils/errors";
 import ForecastCards from "./ForecastCards";
 import NavBar from "./Navbar";
 
 const City = () => {
-  const { searchedCity } = useSelector((state: any) => state.searchCity);
+  const { addNotification } = useNotification();
+  const { searchedCity } = useSelector(
+    (state: StoreType) => state.searchedCity
+  );
 
   const { city: cityUrl } = useParams();
 
-  const onError = (error: AxiosError) => {
+  const onError = (error: ErrorType) => {
     const message = extractErrorMessage(error);
     addNotification({ message, type: "danger" });
   };
 
   const { data, isLoading } = useGetCityForecast(
-    { query: searchedCity.url || cityUrl },
+    { query: searchedCity?.url || cityUrl || "" },
     { onError }
   );
 
@@ -29,7 +33,7 @@ const City = () => {
 
   useEffect(() => {
     const { pathname } = window.location;
-    window.history.replaceState(null, "", searchedCity.url || pathname);
+    window.history.replaceState(null, "", searchedCity?.url || pathname);
   }, [searchedCity]);
 
   return (

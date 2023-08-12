@@ -1,26 +1,32 @@
-import { AxiosError } from "axios";
 import { isEmpty } from "lodash";
 import { useSelector } from "react-redux";
 import { useNotification } from "../../components/Notification/hooks";
 import SearchCityInput from "../../components/SearchCityInput";
 import WeatherCard from "../../components/WeatherCard";
 import { useGetWeather } from "../../services/api/weather";
+import { ErrorType } from "../../services/types/common";
 import { extractErrorMessage } from "../../utils/errors";
 import styles from "./styles.module.css";
+import { StoreType } from "../../store";
 
 const Home = () => {
-  const { searchedCity } = useSelector((state: any) => state.searchCity);
+  const { searchedCity } = useSelector(
+    (state: StoreType) => state.searchedCity
+  );
   const { addNotification } = useNotification();
 
-  const onError = (error: AxiosError) => {
+  const onError = (error: ErrorType) => {
     const message = extractErrorMessage(error);
     addNotification({ message, type: "danger" });
   };
 
-  const { data, isLoading } = useGetWeather(searchedCity, {
-    enabled: !isEmpty(searchedCity),
-    onError,
-  });
+  const { data, isLoading } = useGetWeather(
+    searchedCity || { lat: 0, lon: 0 },
+    {
+      enabled: !isEmpty(searchedCity),
+      onError,
+    }
+  );
   const { current: weather, location } = data || {};
 
   return (
@@ -34,7 +40,7 @@ const Home = () => {
             condition={weather?.condition?.text}
             realFeel={weather?.feelslike_c}
             time={weather?.last_updated}
-            link={searchedCity.url}
+            link={searchedCity?.url}
             isLoading={isLoading}
             type="compact"
             details={[

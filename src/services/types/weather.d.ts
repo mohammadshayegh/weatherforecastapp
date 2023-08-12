@@ -1,5 +1,5 @@
 import { CityType } from "./city";
-import { ResponseType } from "./generics";
+import { ResponseType } from "./common";
 
 export interface WeatherType {
   last_updated_epoch: number;

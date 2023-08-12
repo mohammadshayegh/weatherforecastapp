@@ -1,13 +1,16 @@
-import { ResponseType } from "./generics";
+import { ResponseType } from "./common";
 
-export interface CityType {
-  country: string;
-  id: number;
+export type GeoLocationType = {
   lat: number;
   lon: number;
+};
+
+type CityType = GeoLocationType & {
+  country: string;
+  id: number;
   name: string;
   region: string;
   url: string;
-}
+};
 
 export type CityResponseType = ResponseType<CityType[]>;

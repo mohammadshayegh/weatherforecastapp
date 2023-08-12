@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 type QueryType = {
   key: string;
@@ -12,7 +12,7 @@ export const queriesSlice = createSlice({
     queries: [] as QueryType[],
   },
   reducers: {
-    addQuery: (state, action) => {
+    addQuery: (state, action: PayloadAction<QueryType>) => {
       const { payload } = action;
 
       const queryIndex = state.queries.findIndex(

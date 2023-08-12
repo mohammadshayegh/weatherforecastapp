@@ -8,7 +8,7 @@ type UseGetWeatherInputType = { lat: number; lon: number };
 
 export const useGetWeather = (
   params: UseGetWeatherInputType,
-  queryConfig?: QueryConfigType
+  queryConfig?: QueryConfigType<WeatherResponseType>
 ) => {
   return useQuery<WeatherResponseType>(
     [endpoints.weatherForecast, `${params.lat},${params.lon}`],

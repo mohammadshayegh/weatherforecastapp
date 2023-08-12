@@ -1,29 +1,36 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { isNil } from "lodash";
+
+export type NotificationType = {
+  id: string | number;
+  message: string;
+  type: "success" | "danger" | "warning" | "info";
+};
 
 export const notificationSlice = createSlice({
   name: "notification",
   initialState: {
-    notifications: [],
+    notifications: [] as NotificationType[],
   },
   reducers: {
-    addNotification: (state, action) => {
+    addNotification: (state, action: PayloadAction<NotificationType>) => {
       const { payload } = action;
 
-      //@ts-ignore
       state.notifications.push({
         id: payload.id,
         message: payload.message,
         type: payload.type,
       });
     },
-    deleteNotification: (state, action) => {
+    deleteNotification: (
+      state,
+      action: PayloadAction<{ id?: NotificationType["id"]; index?: number }>
+    ) => {
       const { payload } = action;
-      //@ts-ignore
+
       state.notifications = state.notifications.filter(
         (notification, index) => {
           if (!isNil(payload.index)) return index !== payload.index;
-          //@ts-ignore
           if (!isNil(payload.id)) return notification.id !== payload.id;
 
           return true;

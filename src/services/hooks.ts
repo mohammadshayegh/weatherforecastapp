@@ -1,29 +1,31 @@
-import { AxiosError, AxiosRequestConfig } from "axios";
-import { useCallback, useRef, useState } from "react";
-import useDeepCompareEffect from "../hooks/useDeepCompareEffect";
-import { apiClient } from "./http-common";
-import { QueryConfigType } from "./types/queyClientTypes";
-import { useDispatch, useSelector } from "react-redux";
-import { addQuery } from "../store/slices/queries";
+import { AxiosRequestConfig } from "axios";
 import { isNil } from "lodash";
+import { useCallback, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import useDeepCompareEffect from "../hooks/useDeepCompareEffect";
+import { addQuery } from "../store/slices/queries";
+import { apiClient } from "./http-common";
+import { ErrorType } from "./types/common";
+import { QueryConfigType } from "./types/queyClientTypes";
+import { AppDispatch, StoreType } from "../store";
 
-const useQuery = <T>(
+function useQuery<T>(
   queryKeys: string[],
   query: string,
   config?: AxiosRequestConfig<any>,
-  queryConfig: QueryConfigType = {}
-) => {
+  queryConfig: QueryConfigType<T> = {}
+) {
   const isFetching = useRef(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<T | null>(null);
-  const [error, setError] = useState<AxiosError | null>(null);
-  const { queries } = useSelector((store: any) => store.queries);
-  const dispatch = useDispatch();
+  const [error, setError] = useState<ErrorType>(null);
+  const { queries } = useSelector((store: StoreType) => store.queries);
+  const dispatch: AppDispatch = useDispatch();
   const key = JSON.stringify(queryKeys);
 
   const onSuccess = (data: T) => {
     setData(data);
-    queryConfig.onSuccess?.<T>(data);
+    queryConfig.onSuccess?.(data);
 
     // cache the response
     const staleTime = isNil(queryConfig.staleTime)
@@ -32,7 +34,7 @@ const useQuery = <T>(
     dispatch(addQuery({ key, data, staleTime }));
   };
 
-  const onError = (error: AxiosError) => {
+  const onError = (error: ErrorType) => {
     setError(error);
     queryConfig.onError?.(error);
   };
@@ -61,7 +63,7 @@ const useQuery = <T>(
   useDeepCompareEffect(() => {
     if (queryConfig.enabled === false) return;
 
-    const cachedDate = queries.find((q: any) => q.key === key);
+    const cachedDate = queries.find((q) => q.key === key);
 
     if (cachedDate) {
       setData(cachedDate.data);
@@ -72,6 +74,6 @@ const useQuery = <T>(
   }, [query, config]);
 
   return { data, isLoading: loading, error, fetchData };
-};
+}
 
 export default useQuery;

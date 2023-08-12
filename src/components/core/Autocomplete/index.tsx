@@ -1,20 +1,19 @@
 import { useRef, useState } from "react";
-import TextInput from "../TextInput";
-import styles from "./styles.module.css";
-import AutocompleteOptions from "./AutocompleteOptions";
 import useOutsideOfElementClicked from "../../../hooks/useOutsideOfElementClicked";
-import { CiLocationOn, CiSearch } from "react-icons/ci";
+import TextInput from "../TextInput";
+import AutocompleteOptions from "./AutocompleteOptions";
+import styles from "./styles.module.css";
 
 export type OptionType = {
   id: number | null;
   label: string;
-} | null;
+};
 
-export type AutocompletePropsType = {
+export type AutocompletePropsType<T> = {
   onChange?: (value: string) => void;
   debounceTime?: number;
-  items: OptionType[];
-  onOptionSelect?: (value: OptionType) => void;
+  items: T[];
+  onOptionSelect?: (value: T) => void;
   defaultValue?: string;
   placeholder?: string;
   adornment?: React.ReactNode;
@@ -22,7 +21,7 @@ export type AutocompletePropsType = {
   onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
-const Autocomplete = ({
+function Autocomplete<T extends OptionType>({
   onChange,
   debounceTime = 500,
   items,
@@ -32,7 +31,7 @@ const Autocomplete = ({
   adornment,
   endAdornment,
   onKeyDown,
-}: AutocompletePropsType) => {
+}: AutocompletePropsType<T>) {
   const autocompleteWrapperRef = useRef(null);
   const key = useRef(0);
   const [value, setValue] = useState(defaultValue || "");
@@ -45,7 +44,7 @@ const Autocomplete = ({
     onChange?.(value);
   };
 
-  const onOptionSelectHandler = (value: OptionType) => {
+  const onOptionSelectHandler = (value: T) => {
     key.current++;
     onOptionSelect?.(value);
     onChangeHandler(value?.label || "");
@@ -74,6 +73,6 @@ const Autocomplete = ({
       />
     </div>
   );
-};
+}
 
 export default Autocomplete;

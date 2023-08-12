@@ -1,11 +1,13 @@
 import clsx from "clsx";
 import { RxCross1 } from "react-icons/rx";
+import { NotificationType } from "../../store/slices/notification";
 import Chip from "../core/Chip";
 import { useNotification } from "./hooks";
 import styles from "./styles.module.css";
 
-const EndAdornment = ({ id }: { id: number }) => {
+const EndAdornment = ({ id }: Pick<NotificationType, "id">) => {
   const { deleteNotification } = useNotification();
+
   return (
     <RxCross1
       onClick={() => deleteNotification({ id })}
@@ -25,7 +27,7 @@ const Notification = () => {
       )}
     >
       <div className={styles["notifications"]}>
-        {notifications.map((notification: any) => (
+        {notifications.map((notification) => (
           <Chip
             key={notification.id}
             label={notification.message}

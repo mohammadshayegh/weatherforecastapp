@@ -2,26 +2,30 @@ import { useMemo, useRef, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetCities } from "../../services/api/city";
-import { setSelectedCity } from "../../store/slices/searchCity";
+import { ErrorType } from "../../services/types/common";
+import { setSelectedCity } from "../../store/slices/searchedCity";
 import { extractErrorMessage } from "../../utils/errors";
 import { useNotification } from "../Notification/hooks";
 import Autocomplete from "../core/Autocomplete";
-import { AxiosError } from "axios";
+import { CityResponseType, CityType } from "../../services/types/city";
+import { AppDispatch, StoreType } from "../../store";
 
 const SearchCityInput = () => {
   const [inputValue, setInputValue] = useState("");
   const { addNotification } = useNotification();
-  const { searchedCity } = useSelector((state: any) => state.searchCity);
+  const { searchedCity } = useSelector(
+    (state: StoreType) => state.searchedCity
+  );
   const enabledGetCities = useRef(false);
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
-  const onError = (error: AxiosError) => {
+  const onError = (error: ErrorType) => {
     const message = extractErrorMessage(error);
     addNotification({ message, type: "danger" });
   };
 
-  const onSuccess = (data: any) => {
-    if (data.length === 0) {
+  const onSuccess = (data: CityResponseType) => {
+    if (data?.length === 0) {
       addNotification({ message: "No cities found", type: "warning" });
     }
   };
@@ -32,7 +36,7 @@ const SearchCityInput = () => {
     onSuccess,
   });
 
-  const onCitySelect = (value: any) => {
+  const onCitySelect = (value: CityType) => {
     if (!value) return;
 
     enabledGetCities.current = false;
