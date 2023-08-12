@@ -1,4 +1,4 @@
-import { isEmpty } from "lodash";
+import { isEmpty, kebabCase } from "lodash";
 import { useSelector } from "react-redux";
 import { useNotification } from "../../components/Notification/hooks";
 import SearchCityInput from "../../components/SearchCityInput";
@@ -8,6 +8,7 @@ import { ErrorType } from "../../services/types/common";
 import { extractErrorMessage } from "../../utils/errors";
 import styles from "./styles.module.css";
 import { StoreType } from "../../store";
+import { createUrl } from "../../utils/url";
 
 const Home = () => {
   const { searchedCity } = useSelector(
@@ -42,7 +43,7 @@ const Home = () => {
             condition={weather?.condition?.text}
             realFeel={weather?.feelslike_c}
             time={weather?.last_updated}
-            link={searchedCity?.url}
+            link={createUrl(data?.location)}
             isLoading={isLoading}
             type="compact"
             details={[
