@@ -29,6 +29,8 @@ const ForecastCards = ({
       </>
     );
 
+  if (!forecastInfo?.length) return null;
+
   return (
     <>
       <h2 className={styles["title"]}>Forecast ({FORECAST_DAYS} Days)</h2>
@@ -42,7 +44,10 @@ const ForecastCards = ({
             icon={day.day.condition.icon}
             isLoading={isLoading}
             details={[
-              { label: "Minimum temperature", value: `${day.day.mintemp_c}°C` },
+              {
+                label: "Minimum temperature",
+                value: `${day.day.mintemp_c}°C`,
+              },
               { label: "Humidity", value: `${day.day.avghumidity}%` },
               { label: "Pressure (in)", value: day.day.totalprecip_in },
               { label: "Wind (kph)", value: day.day.maxwind_kph },

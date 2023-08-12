@@ -12,8 +12,8 @@ export const useGetCityForecast = (
   queryConfig?: QueryConfigType<ForecastResponseType>
 ) => {
   return useQuery<ForecastResponseType>(
-    [endpoints.forecast, params.query],
-    endpoints.forecast,
+    [endpoints.forecastWeather, params.query],
+    endpoints.forecastWeather,
     {
       params: {
         key: config.API_KEY,

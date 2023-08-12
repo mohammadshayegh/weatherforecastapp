@@ -6,13 +6,13 @@ import { WeatherResponseType } from "../types/weather";
 
 type UseGetWeatherInputType = { lat: number; lon: number };
 
-export const useGetWeather = (
+export const useGetCurrentWeather = (
   params: UseGetWeatherInputType,
   queryConfig?: QueryConfigType<WeatherResponseType>
 ) => {
   return useQuery<WeatherResponseType>(
-    [endpoints.weatherForecast, `${params.lat},${params.lon}`],
-    endpoints.weatherForecast,
+    [endpoints.currentWeather, `${params.lat},${params.lon}`],
+    endpoints.currentWeather,
     {
       params: {
         key: config.API_KEY,

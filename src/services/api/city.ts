@@ -4,13 +4,13 @@ import useQuery from "../hooks";
 import { CityResponseType } from "../types/city";
 import { QueryConfigType } from "../types/queyClientTypes";
 
-export const useGetCities = (
+export const useSearchCityByText = (
   city: string,
   queryConfig?: QueryConfigType<CityResponseType>
 ) => {
   return useQuery<CityResponseType>(
-    [endpoints.search, city],
-    endpoints.search,
+    [endpoints.searchCity, city],
+    endpoints.searchCity,
     {
       params: {
         key: config.API_KEY,

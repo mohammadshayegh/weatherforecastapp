@@ -69,15 +69,15 @@ const City = () => {
       <div className={styles["cards-wrapper"]}>
         <WeatherCard
           temperature={city?.temp_c}
-          title={`${name} (${country}) current weather`}
+          title={name ? `${name} (${country}) current weather` : "No data"}
           condition={city?.condition?.text}
           realFeel={city?.feelslike_c}
           time={city?.last_updated}
           icon={city?.condition?.icon}
           isLoading={isLoading}
           details={[
-            { label: "Cloud", value: `${city?.cloud}%` },
-            { label: "Humidity", value: `${city?.humidity}%` },
+            { label: "Cloud", value: `${city?.cloud || 0}%` },
+            { label: "Humidity", value: `${city?.humidity || 0}%` },
             { label: "temperature (°F)", value: city?.temp_f },
             { label: "Real Feel (°F)", value: city?.feelslike_f },
             { label: "UV", value: city?.uv },

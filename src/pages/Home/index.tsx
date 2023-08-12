@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNotification } from "../../components/Notification/hooks";
 import SearchCityInput from "../../components/SearchCityInput";
 import WeatherCard from "../../components/WeatherCard";
-import { useGetWeather } from "../../services/api/weather";
+import { useGetCurrentWeather } from "../../services/api/weather";
 import { ErrorType } from "../../services/types/common";
 import { extractErrorMessage } from "../../utils/errors";
 import styles from "./styles.module.css";
@@ -23,7 +23,7 @@ const Home = () => {
 
   console.log(searchedCity);
 
-  const { data, isLoading } = useGetWeather(
+  const { data, isLoading } = useGetCurrentWeather(
     searchedCity || { lat: 0, lon: 0 },
     {
       enabled: !isEmpty(searchedCity),
