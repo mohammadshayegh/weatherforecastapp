@@ -10,7 +10,7 @@ const EndAdornment = ({ id }: Pick<NotificationType, "id">) => {
 
   return (
     <RxCross1
-      onClick={() => deleteNotification({ id })}
+      onClick={() => deleteNotification(id)}
       className={styles["cross-icon"]}
     />
   );

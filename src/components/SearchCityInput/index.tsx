@@ -71,7 +71,7 @@ const SearchCityInput = () => {
 
   return (
     <Autocomplete
-      defaultValue={cityName || inputValue}
+      value={cityName || inputValue}
       items={items || []}
       onChange={setInputValue}
       onOptionSelect={onCitySelect}

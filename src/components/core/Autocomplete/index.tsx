@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useOutsideOfElementClicked from "../../../hooks/useOutsideOfElementClicked";
 import TextInput from "../TextInput";
 import AutocompleteOptions from "./AutocompleteOptions";
@@ -14,7 +14,7 @@ export type AutocompletePropsType<T> = {
   debounceTime?: number;
   items: T[];
   onOptionSelect?: (value: T) => void;
-  defaultValue?: string;
+  value?: string;
   placeholder?: string;
   adornment?: React.ReactNode;
   endAdornment?: React.ReactNode;
@@ -26,31 +26,33 @@ function Autocomplete<T extends OptionType>({
   debounceTime = 500,
   items,
   onOptionSelect,
-  defaultValue,
+  value,
   placeholder,
   adornment,
   endAdornment,
   onKeyDown,
 }: AutocompletePropsType<T>) {
   const autocompleteWrapperRef = useRef(null);
-  const key = useRef(0);
-  const [value, setValue] = useState(defaultValue || "");
+  const [inputValue, setInputValue] = useState(value || "");
   const [open, setOpen] = useState(true);
 
   useOutsideOfElementClicked(autocompleteWrapperRef, () => setOpen(false));
 
   const onChangeHandler = (value: string) => {
-    setValue(value);
+    setInputValue(value);
     onChange?.(value);
   };
 
   const onOptionSelectHandler = (value: T) => {
-    key.current++;
     onOptionSelect?.(value);
     onChangeHandler(value?.label || "");
 
     setOpen(false);
   };
+
+  useEffect(() => {
+    setInputValue(value || "");
+  }, [value]);
 
   return (
     <div className={styles["wrapper"]} ref={autocompleteWrapperRef}>
@@ -59,8 +61,7 @@ function Autocomplete<T extends OptionType>({
         debounceTime={debounceTime}
         onFocus={() => setOpen(true)}
         className={styles["input"]}
-        defaultValue={value}
-        key={key.current}
+        value={inputValue}
         adornment={adornment}
         endAdornment={endAdornment}
         onKeyDown={onKeyDown}
@@ -68,7 +69,7 @@ function Autocomplete<T extends OptionType>({
       />
       <AutocompleteOptions
         items={items}
-        open={value.length > 2 && open}
+        open={inputValue.length > 2 && open}
         onOptionSelect={onOptionSelectHandler}
       />
     </div>

@@ -1,14 +1,14 @@
-import { debounce } from "lodash";
 import {
   CSSProperties,
-  ChangeEvent,
   FocusEvent,
   KeyboardEvent,
   ReactNode,
   useCallback,
+  useEffect,
   useState,
 } from "react";
 import styles from "./style.module.css";
+import { debounce, isNil } from "lodash";
 
 export type TextInputPropsType = {
   defaultValue?: string;
@@ -22,6 +22,7 @@ export type TextInputPropsType = {
   adornment?: ReactNode;
   endAdornment?: ReactNode;
   onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
+  value?: string;
 };
 
 const TextInput = ({
@@ -35,33 +36,51 @@ const TextInput = ({
   adornment,
   endAdornment,
   onKeyDown,
+  value,
 }: TextInputPropsType) => {
-  const [value, setValue] = useState(defaultValue);
+  const [inputValue, setInputValue] = useState<string>(
+    value || defaultValue || ""
+  );
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = useCallback(
+    (newValue: string) => {
+      setInputValue(newValue);
+      onChange(newValue);
+    },
+    [onChange]
+  );
+
+  const debouncedInputChange = useCallback(
+    debounce(handleInputChange, debounceTime),
+    [debounceTime, handleInputChange]
+  );
+
+  useEffect(() => {
+    if (!isNil(value)) setInputValue(value);
+  }, [value]);
+
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    setValue(value);
-    debouncedOnChange(value);
+    setInputValue(value);
+    debouncedInputChange(value);
   };
-
-  const debouncedOnChange = useCallback(debounce(onChange, debounceTime), [
-    onChange,
-  ]);
 
   return (
     <div className={[styles["wrapper"], className].join(" ")}>
-      <div className={styles["icon"]}>{adornment}</div>
+      {adornment && <div className={styles["icon"]}>{adornment}</div>}
       <input
         type="text"
         className={styles["text-input"]}
-        value={value}
         onChange={onChangeHandler}
+        value={inputValue || ""}
         disabled={disabled}
         placeholder={placeholder}
         onFocus={onFocus}
         onKeyDown={onKeyDown}
       />
-      <div className={styles["adornment"]}>{endAdornment}</div>
+      {endAdornment && (
+        <div className={styles["adornment"]}>{endAdornment}</div>
+      )}
     </div>
   );
 };

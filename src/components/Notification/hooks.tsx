@@ -26,10 +26,12 @@ export const useNotification = () => {
     }, 5000);
   };
 
+  const deleteNotificationById = (id: NotificationType["id"]) =>
+    dispatch(deleteNotification({ id }));
+
   return {
     notifications,
     addNotification: addAndDeleteNotification,
-    deleteNotification: (id: { id?: NotificationType["id"]; index?: number }) =>
-      dispatch(deleteNotification(id)),
+    deleteNotification: deleteNotificationById,
   };
 };

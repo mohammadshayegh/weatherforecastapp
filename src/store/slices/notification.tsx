@@ -24,18 +24,15 @@ export const notificationSlice = createSlice({
     },
     deleteNotification: (
       state,
-      action: PayloadAction<{ id?: NotificationType["id"]; index?: number }>
+      action: PayloadAction<{ id: NotificationType["id"] }>
     ) => {
       const { payload } = action;
 
-      state.notifications = state.notifications.filter(
-        (notification, index) => {
-          if (!isNil(payload.index)) return index !== payload.index;
-          if (!isNil(payload.id)) return notification.id !== payload.id;
+      state.notifications = state.notifications.filter((notification) => {
+        if (!isNil(payload.id)) return notification.id !== payload.id;
 
-          return true;
-        }
-      );
+        return true;
+      });
     },
   },
 });
