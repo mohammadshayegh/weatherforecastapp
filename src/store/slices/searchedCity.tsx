@@ -17,6 +17,7 @@ export const searchedCitySlice = createSlice({
       state,
       action: PayloadAction<InitialStateType["searchedCityDetails"]>
     ) => {
+      document.title = `${action.payload?.name} (${action.payload?.country})`;
       state.searchedCityDetails = action.payload;
     },
     setSearchedCityInInput: (

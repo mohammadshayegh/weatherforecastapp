@@ -53,7 +53,6 @@ const SearchCityInput = () => {
     );
 
     enabledGetCities.current = false;
-    document.title = `${selectedCity?.name} (${selectedCity?.country})`;
     dispatch(setSearchedCityDetails(selectedCity));
   };
 
