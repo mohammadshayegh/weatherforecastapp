@@ -12,6 +12,6 @@ export const useGetCurrentWeather = (
     [endpoints.currentWeather, cityUrl],
     endpoints.currentWeather,
     { params: { key: config.API_KEY, q: cityUrl } },
-    queryConfig
+    { enabled: !!cityUrl, ...queryConfig }
   );
 };

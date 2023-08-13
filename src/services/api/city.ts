@@ -12,6 +12,6 @@ export const useSearchCityByText = (
     [endpoints.searchCity, city],
     endpoints.searchCity,
     { params: { key: config.API_KEY, q: city } },
-    queryConfig
+    { enabled: !!city, ...queryConfig }
   );
 };

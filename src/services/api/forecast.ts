@@ -20,6 +20,6 @@ export const useGetCityForecast = (
         days: params.days || config.FORECAST_DAYS_DEFAULT,
       },
     },
-    queryConfig
+    { enabled: !!params.query, ...queryConfig }
   );
 };
