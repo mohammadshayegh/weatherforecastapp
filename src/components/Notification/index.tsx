@@ -1,9 +1,10 @@
-import clsx from "clsx";
 import { RxCross1 } from "react-icons/rx";
 import { NotificationType } from "../../store/slices/notification";
 import Chip from "../core/Chip";
 import { useNotification } from "./hooks";
 import styles from "./styles.module.css";
+import { clss } from "../../utils/styles";
+import config from "../../config";
 
 const EndAdornment = ({ id }: Pick<NotificationType, "id">) => {
   const { deleteNotification } = useNotification();
@@ -21,7 +22,7 @@ const Notification = () => {
 
   return (
     <div
-      className={clsx(
+      className={clss(
         styles["wrapper"],
         !notifications.length && styles["wrapper--hidden"]
       )}
@@ -32,7 +33,7 @@ const Notification = () => {
             key={notification.id}
             label={notification.message}
             type={notification.type}
-            timer={5}
+            timer={config.NOTIFICATION_APPEARANCE_TIME_MS}
             endAdornment={<EndAdornment id={notification.id} />}
           />
         ))}

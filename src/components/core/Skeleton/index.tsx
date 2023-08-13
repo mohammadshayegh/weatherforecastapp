@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import { clss } from "../../../utils/styles";
 import styles from "./styles.module.css";
 
 type SkeletonPropTypes = {
@@ -16,7 +16,7 @@ const Skeleton = ({
 }: SkeletonPropTypes) => {
   return (
     <div
-      className={clsx(
+      className={clss(
         styles["skeleton"],
         styles[`skeleton--${type}`],
         className

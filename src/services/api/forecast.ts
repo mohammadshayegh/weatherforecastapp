@@ -1,5 +1,4 @@
 import config from "../../config";
-import { FORECAST_DAYS } from "../constants";
 import endpoints from "../endpoints";
 import useQuery from "../hooks";
 import { ForecastResponseType } from "../types/forecast";
@@ -18,7 +17,7 @@ export const useGetCityForecast = (
       params: {
         key: config.API_KEY,
         q: params.query,
-        days: params.days || FORECAST_DAYS,
+        days: params.days || config.FORECAST_DAYS_DEFAULT,
       },
     },
     queryConfig

@@ -1,7 +1,7 @@
 .cards-wrapper {
-  max-width: 1000px;
+  max-width: var(--main-container-width);
   margin: auto;
-  padding: 16px;
+  padding: calc(var(--base-size) * 3);
 }
 
 .navbar-container {
@@ -9,11 +9,11 @@
 }
 
 .navbar {
-  padding: 5px 15px;
+  padding: var(--base-size) calc(var(--base-size) * 3);
   display: flex;
   align-items: center;
-  gap: 8px;
-  max-width: 1000px;
+  gap: var(--base-size);
+  max-width: var(--main-container-width);
   margin: auto;
 }
 

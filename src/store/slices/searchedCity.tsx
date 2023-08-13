@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CityType } from "../../services/types/city";
 
 type InitialStateType = {
-  searchedCityInInput: string | null | undefined;
+  searchedCityInInput: string;
   searchedCityDetails: CityType | null | undefined;
 };
 
@@ -10,7 +10,7 @@ export const searchedCitySlice = createSlice({
   name: "searchedCity",
   initialState: {
     searchedCityDetails: null,
-    searchedCityInInput: null,
+    searchedCityInInput: "",
   } as InitialStateType,
   reducers: {
     setSearchedCityDetails: (
@@ -23,7 +23,7 @@ export const searchedCitySlice = createSlice({
       state,
       action: PayloadAction<InitialStateType["searchedCityInInput"]>
     ) => {
-      state.searchedCityInInput = action.payload;
+      state.searchedCityInInput = action.payload?.trim();
     },
   },
 });

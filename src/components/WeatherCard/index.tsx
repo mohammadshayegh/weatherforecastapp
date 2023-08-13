@@ -69,7 +69,7 @@ const WeatherCard = ({
         </div>
       )}
 
-      {/* More deatils link */}
+      {/* More details link */}
       {isLoading ? (
         <Skeleton />
       ) : (

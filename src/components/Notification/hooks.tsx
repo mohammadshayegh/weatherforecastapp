@@ -5,6 +5,7 @@ import {
   deleteNotification,
 } from "../../store/slices/notification";
 import { AppDispatch, StoreType } from "../../store";
+import config from "../../config";
 
 export type AddNotificationInputType = Pick<
   NotificationType,
@@ -23,7 +24,7 @@ export const useNotification = () => {
 
     setTimeout(() => {
       dispatch(deleteNotification({ id }));
-    }, 5000);
+    }, config.NOTIFICATION_APPEARANCE_TIME_MS);
   };
 
   const deleteNotificationById = (id: NotificationType["id"]) =>

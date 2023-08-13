@@ -3,6 +3,7 @@ import useOutsideOfElementClicked from "../../../hooks/useOutsideOfElementClicke
 import TextInput from "../TextInput";
 import AutocompleteOptions from "./AutocompleteOptions";
 import styles from "./styles.module.css";
+import config from "../../../config";
 
 export type OptionType = {
   id: number | null;
@@ -23,7 +24,7 @@ export type AutocompletePropsType<T> = {
 
 function Autocomplete<T extends OptionType>({
   onChange,
-  debounceTime = 500,
+  debounceTime = config.DEBOUNCE_TIME_MS,
   items,
   onOptionSelect,
   value,

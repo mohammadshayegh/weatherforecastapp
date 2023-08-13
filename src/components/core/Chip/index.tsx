@@ -1,6 +1,6 @@
-import clsx from "clsx";
 import styles from "./styles.module.css";
 import ChipIcon from "./ChipIcon";
+import { clss } from "../../../utils/styles";
 
 export type ChipPropsType = {
   label: string;
@@ -11,14 +11,14 @@ export type ChipPropsType = {
 
 const Chip = ({ label, type, endAdornment, timer }: ChipPropsType) => {
   return (
-    <div className={clsx(styles["chip"], styles[`chip--${type}`])}>
+    <div className={clss(styles["chip"], styles[`chip--${type}`])}>
       <ChipIcon type={type} />
       <span className={styles["label"]}>{label}</span>
       <div className={styles["end-adornment"]}>{endAdornment}</div>
       {timer ? (
         <div
           className={styles["timer"]}
-          style={{ animationDuration: `${timer}s` }}
+          style={{ animationDuration: `${timer}ms` }}
         />
       ) : null}
     </div>

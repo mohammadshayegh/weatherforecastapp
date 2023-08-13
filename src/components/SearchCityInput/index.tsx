@@ -14,10 +14,6 @@ import { useNotification } from "../Notification/hooks";
 import Autocomplete from "../core/Autocomplete";
 
 const SearchCityInput = () => {
-  const inputValue =
-    useSelector((state: StoreType) => state.searchedCity.searchedCityInInput) ||
-    "";
-
   const { addNotification } = useNotification();
   const { searchedCityDetails: searchedCity } = useSelector(
     (state: StoreType) => state.searchedCity
@@ -25,6 +21,9 @@ const SearchCityInput = () => {
   const enabledGetCities = useRef(false);
   const dispatch: AppDispatch = useDispatch();
 
+  const inputValue = useSelector(
+    (state: StoreType) => state.searchedCity.searchedCityInInput
+  );
   const setInputValue = (value: string) => {
     dispatch(setSearchedCityInInput(value));
   };
@@ -40,8 +39,8 @@ const SearchCityInput = () => {
     }
   };
 
-  const { data: cities } = useSearchCityByText(inputValue?.trim() || "", {
-    enabled: enabledGetCities.current && inputValue?.trim().length > 2,
+  const { data: cities } = useSearchCityByText(inputValue, {
+    enabled: enabledGetCities.current && inputValue.length > 2,
     onError,
     onSuccess,
   });
@@ -49,14 +48,12 @@ const SearchCityInput = () => {
   const onCitySelect = (value: CityType) => {
     if (!value) return;
 
-    enabledGetCities.current = false;
-
     const selectedCity = cities?.find(
-      (city) => city.lat === value.lat && city.lon === value.lon
+      ({ lat, lon }) => lat === value.lat && lon === value.lon
     );
 
+    enabledGetCities.current = false;
     document.title = `${selectedCity?.name} (${selectedCity?.country})`;
-
     dispatch(setSearchedCityDetails(selectedCity));
   };
 

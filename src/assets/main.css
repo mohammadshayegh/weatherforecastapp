@@ -4,6 +4,7 @@
   --main-border-color: #ccc;
   --main-border-radius: 10px;
   --base-size: 5px;
+  --main-container-width: 1000px;
 
   --pallet-primary-color: #ebebeb;
   --pallet-secondary-color: rgb(2, 5, 7);
@@ -11,6 +12,10 @@
   --pallet-success-color: #4caf4fc2;
   --pallet-warning-color: #ffe600c2;
   --pallet-info-color: #2196f3c2;
+
+  --z-index-1: 10;
+  --z-index-2: 20;
+  --z-index-3: 30;
 }
 
 * {

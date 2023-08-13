@@ -1,5 +1,5 @@
 import WeatherCard from "../../components/WeatherCard";
-import { FORECAST_DAYS } from "../../services/constants";
+import config from "../../config";
 import { CityType } from "../../services/types/city";
 import { ForecastDayType } from "../../services/types/forecast";
 import styles from "./styles.module.css";
@@ -17,14 +17,18 @@ const ForecastCards = ({
   cityName,
   isLoading,
 }: ForecastCardsProps) => {
+  const { FORECAST_DAYS_DEFAULT } = config;
+
   if (isLoading)
     return (
       <>
-        <h2 className={styles["title"]}>Forecast ({FORECAST_DAYS} Days)</h2>
-        {Array(FORECAST_DAYS)
+        <h2 className={styles["title"]}>
+          Forecast ({FORECAST_DAYS_DEFAULT} Days)
+        </h2>
+        {Array(FORECAST_DAYS_DEFAULT)
           .fill(0)
-          .map(() => (
-            <WeatherCard isLoading={true} />
+          .map((_, index) => (
+            <WeatherCard isLoading={true} key={index} />
           ))}
       </>
     );
@@ -33,10 +37,13 @@ const ForecastCards = ({
 
   return (
     <>
-      <h2 className={styles["title"]}>Forecast ({FORECAST_DAYS} Days)</h2>
+      <h2 className={styles["title"]}>
+        Forecast ({config.FORECAST_DAYS_DEFAULT} Days)
+      </h2>
       {forecastInfo?.map((day) => {
         return (
           <WeatherCard
+            key={`${day.date}_${day.day.maxtemp_c}`}
             temperature={day.day.maxtemp_c}
             title={`${cityName} (${country})`}
             time={day.date}

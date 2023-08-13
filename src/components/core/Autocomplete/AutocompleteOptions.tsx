@@ -20,10 +20,11 @@ function AutocompleteOptions<T extends OptionType>({
       <div className={styles["options-wrapper"]}>
         {items.map((item: T) => (
           <div
+            key={item.id}
             className={styles["option"]}
             onClick={() => onOptionSelect?.(item)}
           >
-            {item?.label}
+            {item.label}
           </div>
         ))}
       </div>

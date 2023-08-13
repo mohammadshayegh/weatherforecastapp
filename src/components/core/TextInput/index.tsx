@@ -9,6 +9,8 @@ import {
 } from "react";
 import styles from "./style.module.css";
 import { debounce, isNil } from "lodash";
+import { clss } from "../../../utils/styles";
+import config from "../../../config";
 
 export type TextInputPropsType = {
   defaultValue?: string;
@@ -31,7 +33,7 @@ const TextInput = ({
   onChange = () => {},
   className,
   disabled,
-  debounceTime = 1500,
+  debounceTime = config.DEBOUNCE_TIME_MS,
   onFocus,
   adornment,
   endAdornment,
@@ -66,7 +68,7 @@ const TextInput = ({
   };
 
   return (
-    <div className={[styles["wrapper"], className].join(" ")}>
+    <div className={clss(styles["wrapper"], className)}>
       {adornment && <div className={styles["icon"]}>{adornment}</div>}
       <input
         type="text"
