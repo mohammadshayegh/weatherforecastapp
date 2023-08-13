@@ -64,12 +64,10 @@ const SearchCityInput = () => {
     ? `${searchedCity?.name} (${searchedCity?.country})`
     : undefined;
 
-  const items = useMemo(() => {
-    return cities?.map((city) => ({
-      ...city,
-      label: `${city.name} (${city.country})`,
-    }));
-  }, [cities]);
+  const items = cities?.map((city) => ({
+    ...city,
+    label: `${city.name} (${city.country})`,
+  }));
 
   return (
     <Autocomplete

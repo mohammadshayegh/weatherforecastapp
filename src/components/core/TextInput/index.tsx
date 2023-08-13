@@ -10,7 +10,7 @@ import {
 } from "react";
 import styles from "./style.module.css";
 
-type PropsType = {
+export type TextInputPropsType = {
   defaultValue?: string;
   placeholder?: string;
   onChange?: (e: string) => void;
@@ -35,7 +35,7 @@ const TextInput = ({
   adornment,
   endAdornment,
   onKeyDown,
-}: PropsType) => {
+}: TextInputPropsType) => {
   const [value, setValue] = useState(defaultValue);
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
