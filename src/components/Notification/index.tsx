@@ -35,6 +35,7 @@ const Notification = () => {
             type={notification.type}
             timer={config.NOTIFICATION_APPEARANCE_TIME_MS}
             endAdornment={<EndAdornment id={notification.id} />}
+            data-testid={`notification-${notification.id}`}
           />
         ))}
       </div>
