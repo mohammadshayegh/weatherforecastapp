@@ -69,7 +69,7 @@ const TextInput = ({
 
   return (
     <div className={clss(styles["wrapper"], className)}>
-      {adornment && <div className={styles["icon"]}>{adornment}</div>}
+      {adornment && <div className={styles["adornment"]}>{adornment}</div>}
       <input
         type="text"
         className={styles["text-input"]}
@@ -81,7 +81,7 @@ const TextInput = ({
         onKeyDown={onKeyDown}
       />
       {endAdornment && (
-        <div className={styles["adornment"]}>{endAdornment}</div>
+        <div className={styles["end-adornment"]}>{endAdornment}</div>
       )}
     </div>
   );

@@ -26,7 +26,9 @@ describe("TextInput", () => {
     const mockHook = jest.fn();
     const mockText = "Hello world";
     const { textInput } = setup({ onChange: mockHook, debounceTime: 350 });
-    userEvent.type(textInput, mockText);
+
+    await userEvent.type(textInput, mockText);
+
     expect(mockHook).not.toHaveBeenCalledWith(mockText);
     await waitFor(() => expect(mockHook).toHaveBeenCalledWith(mockText));
     jest.clearAllMocks();

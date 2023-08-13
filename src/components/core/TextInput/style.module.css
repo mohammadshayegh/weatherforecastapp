@@ -16,16 +16,16 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.icon,
-.adornment {
+.adornment,
+.end-adornment {
   position: absolute;
   top: calc(3 * var(--base-size));
 }
 
-.icon {
+.adornment {
   left: calc(2 * var(--base-size));
 }
 
-.adornment {
+.end-adornment {
   right: calc(2 * var(--base-size));
 }
