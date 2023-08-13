@@ -8,8 +8,8 @@ import { useGetCityForecast } from "../../services/api/forecast";
 import { ErrorType } from "../../services/types/common";
 import { StoreType } from "../../store";
 import {
-  setSelectedCity,
-  setUserSearchedCity,
+  setSearchedCityDetails,
+  setSearchedCityInInput,
 } from "../../store/slices/searchedCity";
 import { extractErrorMessage } from "../../utils/errors";
 import { createUrl } from "../../utils/url";
@@ -26,7 +26,7 @@ const City = () => {
     lon: number | string | null | undefined;
   }>({ lat, lon });
   const dispatch = useDispatch();
-  const { searchedCity } = useSelector(
+  const { searchedCityDetails: searchedCity } = useSelector(
     (state: StoreType) => state.searchedCity
   );
 
@@ -49,8 +49,8 @@ const City = () => {
       onSuccess: (data) => {
         const { name, country } = data?.location || {};
 
-        dispatch(setSelectedCity({ ...data.location, url: cityName }));
-        dispatch(setUserSearchedCity(`${name} (${country})`));
+        dispatch(setSearchedCityDetails({ ...data.location, url: cityName }));
+        dispatch(setSearchedCityInInput(`${name} (${country})`));
       },
     }
   );

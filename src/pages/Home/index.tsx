@@ -11,7 +11,7 @@ import { StoreType } from "../../store";
 import { createUrl } from "../../utils/url";
 
 const Home = () => {
-  const { searchedCity } = useSelector(
+  const { searchedCityDetails: searchedCity } = useSelector(
     (state: StoreType) => state.searchedCity
   );
   const { addNotification } = useNotification();

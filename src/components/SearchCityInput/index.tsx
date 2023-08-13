@@ -6,8 +6,8 @@ import { CityResponseType, CityType } from "../../services/types/city";
 import { ErrorType } from "../../services/types/common";
 import { AppDispatch, StoreType } from "../../store";
 import {
-  setSelectedCity,
-  setUserSearchedCity,
+  setSearchedCityDetails,
+  setSearchedCityInInput,
 } from "../../store/slices/searchedCity";
 import { extractErrorMessage } from "../../utils/errors";
 import { useNotification } from "../Notification/hooks";
@@ -15,18 +15,18 @@ import Autocomplete from "../core/Autocomplete";
 
 const SearchCityInput = () => {
   const inputValue =
-    useSelector((state: StoreType) => state.searchedCity.userSearchedCity) ||
+    useSelector((state: StoreType) => state.searchedCity.searchedCityInInput) ||
     "";
 
   const { addNotification } = useNotification();
-  const { searchedCity } = useSelector(
+  const { searchedCityDetails: searchedCity } = useSelector(
     (state: StoreType) => state.searchedCity
   );
   const enabledGetCities = useRef(false);
   const dispatch: AppDispatch = useDispatch();
 
   const setInputValue = (value: string) => {
-    dispatch(setUserSearchedCity(value));
+    dispatch(setSearchedCityInInput(value));
   };
 
   console.log("inputValue", inputValue);
@@ -59,7 +59,7 @@ const SearchCityInput = () => {
 
     document.title = `${selectedCity?.name} (${selectedCity?.country})`;
 
-    dispatch(setSelectedCity(selectedCity));
+    dispatch(setSearchedCityDetails(selectedCity));
   };
 
   const cityName = searchedCity?.name

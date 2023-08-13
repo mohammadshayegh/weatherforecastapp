@@ -1,41 +1,33 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { CityType, GeoLocationType } from "../../services/types/city";
+import { CityType } from "../../services/types/city";
 
 type InitialStateType = {
-  userSearchedCity: string | null | undefined;
-  searchedCity: CityType | null | undefined;
-  userLocation: GeoLocationType | null | undefined;
+  searchedCityInInput: string | null | undefined;
+  searchedCityDetails: CityType | null | undefined;
 };
 
 export const searchedCitySlice = createSlice({
   name: "searchedCity",
   initialState: {
-    searchedCity: null,
-    userLocation: null,
-    userSearchedCity: null,
+    searchedCityDetails: null,
+    searchedCityInInput: null,
   } as InitialStateType,
   reducers: {
-    setSelectedCity: (
+    setSearchedCityDetails: (
       state,
-      action: PayloadAction<InitialStateType["searchedCity"]>
+      action: PayloadAction<InitialStateType["searchedCityDetails"]>
     ) => {
-      state.searchedCity = action.payload;
+      state.searchedCityDetails = action.payload;
     },
-    setUserLocation: (
+    setSearchedCityInInput: (
       state,
-      action: PayloadAction<InitialStateType["userLocation"]>
+      action: PayloadAction<InitialStateType["searchedCityInInput"]>
     ) => {
-      state.userLocation = action.payload;
-    },
-    setUserSearchedCity: (
-      state,
-      action: PayloadAction<InitialStateType["userSearchedCity"]>
-    ) => {
-      state.userSearchedCity = action.payload;
+      state.searchedCityInInput = action.payload;
     },
   },
 });
 
-export const { setSelectedCity, setUserLocation, setUserSearchedCity } =
+export const { setSearchedCityDetails, setSearchedCityInInput } =
   searchedCitySlice.actions;
 export default searchedCitySlice.reducer;
