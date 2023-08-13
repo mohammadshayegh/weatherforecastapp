@@ -2,7 +2,6 @@
   "name": "weatherforecastapp",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3000",
   "devDependencies": {
     "@testing-library/dom": "^9.3.1",
     "@testing-library/jest-dom": "^5.14.1",
