@@ -12,6 +12,7 @@ import {
 import { extractErrorMessage } from "../../utils/errors";
 import { useNotification } from "../Notification/hooks";
 import Autocomplete from "../core/Autocomplete";
+import { createCityName } from "../../utils/city";
 
 const SearchCityInput = () => {
   const { addNotification } = useNotification();
@@ -56,18 +57,14 @@ const SearchCityInput = () => {
     dispatch(setSearchedCityDetails(selectedCity));
   };
 
-  const cityName = searchedCity?.name
-    ? `${searchedCity?.name} (${searchedCity?.country})`
-    : undefined;
-
   const items = cities?.map((city) => ({
     ...city,
-    label: `${city.name} (${city.country})`,
+    label: createCityName(city),
   }));
 
   return (
     <Autocomplete
-      value={cityName || inputValue}
+      value={createCityName(searchedCity) || inputValue}
       items={items || []}
       onChange={setInputValue}
       onOptionSelect={onCitySelect}

@@ -14,7 +14,7 @@ export const createCityUrl = (location: CityType | null | undefined) => {
 };
 
 export const createCityName = (location: CityType | null | undefined) => {
-  if (!location || isEmpty(location)) return "";
+  if (!location || isEmpty(location) || !location.name) return "";
 
   return `${location.name} (${location.country})`;
 };

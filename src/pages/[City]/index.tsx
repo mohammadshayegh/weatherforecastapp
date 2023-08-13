@@ -11,7 +11,7 @@ import {
   setSearchedCityInInput,
 } from "../../store/slices/searchedCity";
 import { extractErrorMessage } from "../../utils/errors";
-import { createCityUrl } from "../../utils/city";
+import { createCityName, createCityUrl } from "../../utils/city";
 import ForecastCards from "./ForecastCards";
 import NavBar from "./Navbar";
 import styles from "./styles.module.css";
@@ -32,9 +32,8 @@ const City = () => {
   };
 
   const onSuccess = (data: ForecastResponseType) => {
-    const { name, country } = data?.location || {};
     dispatch(setSearchedCityDetails(data.location));
-    dispatch(setSearchedCityInInput(`${name} (${country})`));
+    dispatch(setSearchedCityInInput(createCityName(data?.location)));
   };
 
   const { data, isLoading } = useGetCityForecast(
@@ -57,7 +56,11 @@ const City = () => {
       <div className={styles["cards-wrapper"]}>
         <WeatherCard
           temperature={city?.temp_c}
-          title={name ? `${name} (${country}) current weather` : "No data"}
+          title={
+            name
+              ? createCityName(data?.location) + ` current weather`
+              : "No data"
+          }
           condition={city?.condition?.text}
           realFeel={city?.feelslike_c}
           time={city?.last_updated}

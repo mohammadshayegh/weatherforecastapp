@@ -6,7 +6,7 @@ import WeatherCard from "../../components/WeatherCard";
 import { useGetCurrentWeather } from "../../services/api/current";
 import { ErrorType } from "../../services/types/common";
 import { StoreType } from "../../store";
-import { createCityUrl } from "../../utils/city";
+import { createCityName, createCityUrl } from "../../utils/city";
 import { extractErrorMessage } from "../../utils/errors";
 import styles from "./styles.module.css";
 
@@ -37,7 +37,7 @@ const Home = () => {
         {weather && (
           <WeatherCard
             temperature={weather?.temp_c}
-            title={`${location?.name} (${location?.country}) current weather`}
+            title={createCityName(location) + ` current weather`}
             condition={weather?.condition?.text}
             realFeel={weather?.feelslike_c}
             time={weather?.last_updated}

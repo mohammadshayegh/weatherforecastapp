@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CityType } from "../../services/types/city";
+import { createCityName } from "../../utils/city";
 
 type InitialStateType = {
   searchedCityInInput: string;
@@ -17,7 +18,7 @@ export const searchedCitySlice = createSlice({
       state,
       action: PayloadAction<InitialStateType["searchedCityDetails"]>
     ) => {
-      document.title = `${action.payload?.name} (${action.payload?.country})`;
+      document.title = createCityName(action.payload);
       state.searchedCityDetails = action.payload;
     },
     setSearchedCityInInput: (
