@@ -21,8 +21,6 @@ const Home = () => {
     addNotification({ message, type: "danger" });
   };
 
-  console.log(searchedCity);
-
   const { data, isLoading } = useGetCurrentWeather(
     searchedCity || { lat: 0, lon: 0 },
     {
