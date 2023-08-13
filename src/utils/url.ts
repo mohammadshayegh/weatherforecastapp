@@ -10,5 +10,5 @@ export const createUrl = (location: CityType | null | undefined) => {
     kebabCase(location.region) +
     "-" +
     kebabCase(location.country)
-  }?lat=${location?.lat}&lon=${location?.lon}`;
+  }`;
 };

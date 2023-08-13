@@ -1,7 +1,6 @@
-import { isNil } from "lodash";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useNotification } from "../../components/Notification/hooks";
 import WeatherCard from "../../components/WeatherCard";
 import { useGetCityForecast } from "../../services/api/forecast";
@@ -16,51 +15,40 @@ import { createUrl } from "../../utils/url";
 import ForecastCards from "./ForecastCards";
 import NavBar from "./Navbar";
 import styles from "./styles.module.css";
+import { ForecastResponseType } from "../../services/types/forecast";
 
 const City = () => {
   const { addNotification } = useNotification();
-  const [searchParams] = useSearchParams();
-  const [lat, lon] = [searchParams.get("lat"), searchParams.get("lon")];
-  const [geoLocation, setGeoLocation] = useState<{
-    lat: number | string | null | undefined;
-    lon: number | string | null | undefined;
-  }>({ lat, lon });
+  const { city: cityUrl = "" } = useParams();
+  const [searchedCityUrl, setSearchedCityUrl] = useState(cityUrl);
   const dispatch = useDispatch();
   const { searchedCityDetails: searchedCity } = useSelector(
     (state: StoreType) => state.searchedCity
   );
-
-  const { city: cityName = "" } = useParams();
 
   const onError = (error: ErrorType) => {
     const message = extractErrorMessage(error);
     addNotification({ message, type: "danger" });
   };
 
-  const { data, isLoading } = useGetCityForecast(
-    {
-      query:
-        isNil(geoLocation.lat) || isNil(geoLocation.lon)
-          ? cityName
-          : `${geoLocation.lat},${geoLocation.lon}`,
-    },
-    {
-      onError,
-      onSuccess: (data) => {
-        const { name, country } = data?.location || {};
+  const onSuccess = (data: ForecastResponseType) => {
+    const { name, country } = data?.location || {};
+    dispatch(setSearchedCityDetails(data.location));
+    dispatch(setSearchedCityInInput(`${name} (${country})`));
+  };
 
-        dispatch(setSearchedCityDetails({ ...data.location, url: cityName }));
-        dispatch(setSearchedCityInInput(`${name} (${country})`));
-      },
-    }
+  const { data, isLoading } = useGetCityForecast(
+    { query: searchedCityUrl },
+    { onError, onSuccess }
   );
 
-  const city = data?.current;
+  const { current: city } = data || {};
   const { name, country } = data?.location || {};
 
   useEffect(() => {
-    setGeoLocation({ lat: searchedCity?.lat, lon: searchedCity?.lon });
-    window.history.replaceState(null, "", createUrl(searchedCity));
+    const url = createUrl(searchedCity);
+    setSearchedCityUrl(url);
+    window.history.replaceState(null, "", url);
   }, [searchedCity]);
 
   return (

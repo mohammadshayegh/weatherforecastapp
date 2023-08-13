@@ -11,12 +11,7 @@ export const useSearchCityByText = (
   return useQuery<CityResponseType>(
     [endpoints.searchCity, city],
     endpoints.searchCity,
-    {
-      params: {
-        key: config.API_KEY,
-        q: city,
-      },
-    },
+    { params: { key: config.API_KEY, q: city } },
     queryConfig
   );
 };

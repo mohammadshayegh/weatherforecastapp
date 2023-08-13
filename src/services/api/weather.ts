@@ -4,21 +4,14 @@ import useQuery from "../hooks";
 import { QueryConfigType } from "../types/queyClientTypes";
 import { WeatherResponseType } from "../types/weather";
 
-type UseGetWeatherInputType = { lat: number; lon: number };
-
 export const useGetCurrentWeather = (
-  params: UseGetWeatherInputType,
+  cityUrl: string,
   queryConfig?: QueryConfigType<WeatherResponseType>
 ) => {
   return useQuery<WeatherResponseType>(
-    [endpoints.currentWeather, `${params.lat},${params.lon}`],
+    [endpoints.currentWeather, cityUrl],
     endpoints.currentWeather,
-    {
-      params: {
-        key: config.API_KEY,
-        q: `${params.lat},${params.lon}`,
-      },
-    },
+    { params: { key: config.API_KEY, q: cityUrl } },
     queryConfig
   );
 };

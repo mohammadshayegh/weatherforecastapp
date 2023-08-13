@@ -1,14 +1,14 @@
-import { isEmpty, kebabCase } from "lodash";
+import { isEmpty } from "lodash";
 import { useSelector } from "react-redux";
 import { useNotification } from "../../components/Notification/hooks";
 import SearchCityInput from "../../components/SearchCityInput";
 import WeatherCard from "../../components/WeatherCard";
 import { useGetCurrentWeather } from "../../services/api/weather";
 import { ErrorType } from "../../services/types/common";
-import { extractErrorMessage } from "../../utils/errors";
-import styles from "./styles.module.css";
 import { StoreType } from "../../store";
+import { extractErrorMessage } from "../../utils/errors";
 import { createUrl } from "../../utils/url";
+import styles from "./styles.module.css";
 
 const Home = () => {
   const { searchedCityDetails: searchedCity } = useSelector(
@@ -21,13 +21,10 @@ const Home = () => {
     addNotification({ message, type: "danger" });
   };
 
-  const { data, isLoading } = useGetCurrentWeather(
-    searchedCity || { lat: 0, lon: 0 },
-    {
-      enabled: !isEmpty(searchedCity),
-      onError,
-    }
-  );
+  const { data, isLoading } = useGetCurrentWeather(createUrl(searchedCity), {
+    enabled: !isEmpty(searchedCity),
+    onError,
+  });
   const { current: weather, location } = data || {};
 
   return (
