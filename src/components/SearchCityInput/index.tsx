@@ -22,7 +22,7 @@ const SearchCityInput = () => {
   const { searchedCityDetails: searchedCity } = useSelector(
     (state: StoreType) => state.searchedCity
   );
-  const optionIsSelected = useRef(false);
+  const enabledGetCities = useRef(false);
   const dispatch: AppDispatch = useDispatch();
 
   const setInputValue = (value: string) => {
@@ -41,7 +41,7 @@ const SearchCityInput = () => {
   };
 
   const { data: cities } = useSearchCityByText(inputValue?.trim() || "", {
-    enabled: !optionIsSelected.current && inputValue?.trim().length > 2,
+    enabled: enabledGetCities.current && inputValue?.trim().length > 2,
     onError,
     onSuccess,
   });
@@ -49,7 +49,7 @@ const SearchCityInput = () => {
   const onCitySelect = (value: CityType) => {
     if (!value) return;
 
-    optionIsSelected.current = true;
+    enabledGetCities.current = false;
 
     const selectedCity = cities?.find(
       (city) => city.lat === value.lat && city.lon === value.lon
@@ -80,7 +80,7 @@ const SearchCityInput = () => {
       adornment={<CiSearch fontSize="2rem" />}
       placeholder="Search city"
       onKeyDown={() => {
-        optionIsSelected.current = false;
+        enabledGetCities.current = true;
       }}
     />
   );
