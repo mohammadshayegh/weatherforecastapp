@@ -11,7 +11,7 @@ import {
   setSearchedCityInInput,
 } from "../../store/slices/searchedCity";
 import { extractErrorMessage } from "../../utils/errors";
-import { createUrl } from "../../utils/url";
+import { createCityUrl } from "../../utils/city";
 import ForecastCards from "./ForecastCards";
 import NavBar from "./Navbar";
 import styles from "./styles.module.css";
@@ -46,7 +46,7 @@ const City = () => {
   const { name, country } = data?.location || {};
 
   useEffect(() => {
-    const url = createUrl(searchedCity);
+    const url = createCityUrl(searchedCity);
     setSearchedCityUrl(url);
     window.history.replaceState(null, "", url);
   }, [searchedCity]);

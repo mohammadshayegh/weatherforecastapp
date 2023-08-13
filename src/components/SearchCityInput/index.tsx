@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { CiSearch } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
-import { useSearchCityByText } from "../../services/api/city";
+import { useSearchCityByText } from "../../services/api/search";
 import { CityResponseType, CityType } from "../../services/types/city";
 import { ErrorType } from "../../services/types/common";
 import { AppDispatch, StoreType } from "../../store";

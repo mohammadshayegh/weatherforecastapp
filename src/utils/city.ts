@@ -1,7 +1,7 @@
 import { isEmpty, kebabCase } from "lodash";
 import { CityType } from "../services/types/city";
 
-export const createUrl = (location: CityType | null | undefined) => {
+export const createCityUrl = (location: CityType | null | undefined) => {
   if (!location || isEmpty(location)) return "";
 
   return `${
@@ -11,4 +11,10 @@ export const createUrl = (location: CityType | null | undefined) => {
     "-" +
     kebabCase(location.country)
   }`;
+};
+
+export const createCityName = (location: CityType | null | undefined) => {
+  if (!location || isEmpty(location)) return "";
+
+  return `${location.name} (${location.country})`;
 };

@@ -3,11 +3,11 @@ import { useSelector } from "react-redux";
 import { useNotification } from "../../components/Notification/hooks";
 import SearchCityInput from "../../components/SearchCityInput";
 import WeatherCard from "../../components/WeatherCard";
-import { useGetCurrentWeather } from "../../services/api/weather";
+import { useGetCurrentWeather } from "../../services/api/current";
 import { ErrorType } from "../../services/types/common";
 import { StoreType } from "../../store";
+import { createCityUrl } from "../../utils/city";
 import { extractErrorMessage } from "../../utils/errors";
-import { createUrl } from "../../utils/url";
 import styles from "./styles.module.css";
 
 const Home = () => {
@@ -21,10 +21,13 @@ const Home = () => {
     addNotification({ message, type: "danger" });
   };
 
-  const { data, isLoading } = useGetCurrentWeather(createUrl(searchedCity), {
-    enabled: !isEmpty(searchedCity),
-    onError,
-  });
+  const { data, isLoading } = useGetCurrentWeather(
+    createCityUrl(searchedCity),
+    {
+      enabled: !isEmpty(searchedCity),
+      onError,
+    }
+  );
   const { current: weather, location } = data || {};
 
   return (
@@ -38,7 +41,7 @@ const Home = () => {
             condition={weather?.condition?.text}
             realFeel={weather?.feelslike_c}
             time={weather?.last_updated}
-            link={createUrl(data?.location)}
+            link={createCityUrl(data?.location)}
             isLoading={isLoading}
             type="compact"
             details={[
