@@ -18,6 +18,7 @@ export const searchedCitySlice = createSlice({
       state,
       action: PayloadAction<InitialStateType["searchedCityDetails"]>
     ) => {
+      //FIXME: this is a side effect, move it to the component
       document.title = createCityName(action.payload);
       state.searchedCityDetails = action.payload;
     },

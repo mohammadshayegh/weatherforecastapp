@@ -1,4 +1,4 @@
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 import { useSelector } from "react-redux";
 import { useNotification } from "../../components/Notification/hooks";
 import SearchCityInput from "../../components/SearchCityInput";
@@ -30,6 +30,7 @@ const Home = () => {
   );
   const { current: weather, location } = data || {};
 
+  // FIXME: clear up the JSX
   return (
     <div className={styles["layout"]}>
       <div className={styles["wrapper"]}>

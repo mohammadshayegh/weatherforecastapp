@@ -8,7 +8,8 @@ import {
   useState,
 } from "react";
 import styles from "./style.module.css";
-import { debounce, isNil } from "lodash";
+import isNil from "lodash/isNil";
+import debounce from "lodash/debounce";
 import { clss } from "../../../utils/styles";
 import config from "../../../config";
 

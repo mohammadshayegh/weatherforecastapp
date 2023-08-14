@@ -1,4 +1,5 @@
-import { isEmpty, kebabCase } from "lodash";
+import isEmpty from "lodash/isEmpty";
+import kebabCase from "lodash/kebabCase";
 import { CityType } from "../services/types/city";
 
 export const createCityUrl = (location: CityType | null | undefined) => {

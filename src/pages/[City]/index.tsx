@@ -50,6 +50,8 @@ const City = () => {
     window.history.replaceState(null, "", url);
   }, [searchedCity]);
 
+  //FIXME: clear up the JSX
+  //FIXME: optimize weather cards rendering
   return (
     <>
       <NavBar />

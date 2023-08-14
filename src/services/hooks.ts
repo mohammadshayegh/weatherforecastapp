@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from "axios";
-import { isNil } from "lodash";
+import isNil from "lodash/isNil";
 import { useCallback, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useDeepCompareEffect from "../hooks/useDeepCompareEffect";
@@ -51,8 +51,7 @@ function useQuery<T>(
     isFetching.current = true;
     setLoading(true);
     try {
-      const res = await apiClient.get<T>(query, config);
-      const data = await res.data;
+      const { data } = await apiClient.get<T>(query, config);
       onSuccess(data);
     } catch (error: any) {
       onError(error);

@@ -1,5 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { isNil } from "lodash";
+import isNil from "lodash/isNil";
+
+//FIXME: move this to a separate file
 
 export type NotificationType = {
   id: string | number;
